@@ -1,0 +1,332 @@
+\documentclass[14pt, a4paper]{article}
+\usepackage{minitoc}
+\usepackage[left=3.00cm, right=2.5cm, top=2.00cm, bottom=2.00cm]{geometry}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{mathtools}
+\usepackage{graphicx}
+%\usepackage{algpseudocode}
+%\usepackage{algorithm}
+\usepackage[ruled,vlined,linesnumbered]{algorithm2e}
+\usepackage{blindtext}
+\usepackage{setspace}
+\usepackage[utf8]{inputenc}
+\usepackage[utf8]{vietnam}
+\usepackage[center]{caption}
+\usepackage[shortlabels]{enumitem}
+\usepackage{fancyhdr} % header, footer
+\usepackage{hyperref} % loại bỏ border với mục lục và công thức
+\usepackage[nonumberlist, nopostdot, nogroupskip]{glossaries}
+\usepackage{glossary-superragged}
+\usepackage{tikz,tkz-tab}
+\usepackage{pythonhighlight}
+\setglossarystyle{superraggedheaderborder}
+\pagestyle{fancy}
+%\usepackage[style=numeric,sortcites]{biblatex}
+%\addbibresource{ref.bib}
+%\usepackage[numbers]{natbib}
+\usepackage{indentfirst}
+\usepackage[natbib,backend=biber,style=ieee, sorting=ynt]{biblatex}
+
+\usepackage{caption}
+\usepackage{subcaption}
+
+\bibliography{ref.bib}
+
+\graphicspath{{./figures/}}
+
+\fancyhf{}
+%\rhead{\textbf{Môn học: Các phương pháp thống kê hiện đại trong nghiên cứu Xã hội học}}
+\lhead{\textbf{GVHD: TS. Trịnh Quốc Anh}}
+\rfoot{\thepage}
+\lfoot{\textbf{Học viên thực hiện: Nguyễn Chí Thanh - 21007925}}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.4pt}
+%
+%\numberwithin{equation}{section}
+%\numberwithin{algorithm}{section}
+%\numberwithin{figure}{section}
+%
+%\setlength{\parindent}{0.5cm}
+%
+%\setcounter{secnumdepth}{3} % Cho phép subsubsection trong report
+%\setcounter{tocdepth}{3} % Chèn subsubsection vào bảng mục lục
+
+%\newtheorem{dl}{Định lý}
+%\newtheorem{md}{Mệnh đề}
+%\newtheorem{bd}{Bổ đề}
+%\newtheorem{dn}{Định nghĩa}
+%\newtheorem{hq}{Hệ quả}
+
+%\newtheorem{baitap}{Bài tập}
+%\newtheorem*{loigiai}{Lời giải}
+
+%\numberwithin{dl}{section}
+%\numberwithin{md}{section}
+%\numberwithin{bd}{section}
+%\numberwithin{dn}{section}
+%\numberwithin{hq}{section}
+
+\setlength{\parindent}{0cm}
+
+\newtheorem{dl}{Định lý}
+\newtheoremstyle{sltheorem}
+{}                % Space above
+{}                % Space below
+{\normalfont}        % Theorem body font % (default is "\upshape")
+{}                % Indent amount
+{\bfseries}       % Theorem head font % (default is \mdseries)
+{.}               % Punctuation after theorem head % default: no punctuation
+{ }               % Space after theorem head
+{}                % Theorem head spec
+\theoremstyle{sltheorem}
+\newtheorem{baitap}{Bài tập}
+\newtheoremstyle{soltheorem}
+{}                % Space above
+{}                % Space below
+{\normalfont}        % Theorem body font % (default is "\upshape")
+{}                % Indent amount
+{\bfseries}       % Theorem head font % (default is \mdseries)
+{.}               % Punctuation after theorem head % default: no punctuation
+{\newline}               % Space after theorem head
+{}                % Theorem head spec
+\theoremstyle{soltheorem}
+\newtheorem*{loigiai}{Lời giải}
+
+\onehalfspacing
+
+
+\begin{document}
+\begin{titlepage}
+
+    \newcommand{\HRule}{\rule{\linewidth}{0.5mm}} % Defines a new command for the horizontal lines, change thickness here
+
+    \center % Center everything on the page
+
+    %----------------------------------------------------------------------------------------
+    %	HEADING SECTIONS
+    %----------------------------------------------------------------------------------------
+    \textsc{\LARGE Đại học Quốc Gia Hà Nội}\\[0.5cm]
+    \textsc{\LARGE Trường đại học Khoa học tự nhiên}\\[0.5cm] % Name of your university/college
+    \textsc{\LARGE Khoa Toán - Cơ - Tin học}\\[0.5cm]
+
+    \includegraphics[scale=0.2]{HUS-logo.jpg}\\[0.5cm]
+
+    \textsc{\Large Chuyên ngành: Khoa học dữ liệu}\\[0.5cm] % Major heading such as course name
+
+
+    %----------------------------------------------------------------------------------------
+    %	TITLE SECTION
+    %----------------------------------------------------------------------------------------
+
+    \HRule \\[0.4cm]
+    { \huge \bfseries Bài tập môn học}\\[0.4cm] % Title of your document
+    \HRule \\[1.5cm]
+
+    \textsc{\Large Môn học: Các phương pháp thống kê hiện đại \\ trong nghiên cứu Xã hội học}\\[1cm] % Minor heading such as course title
+
+
+    \textsc{\Large Bài tập giữa kỳ}\\[1cm]
+
+
+    %----------------------------------------------------------------------------------------
+    %	AUTHOR SECTION
+    %----------------------------------------------------------------------------------------
+    \begin{minipage}{0.4\textwidth}
+        \begin{flushleft} \large
+        \emph{Giảng viên hướng dẫn:} \\
+        TS. Trịnh Quốc Anh % Supervisor's Name
+        \end{flushleft}
+    \end{minipage}\\[0.5cm]
+
+    \begin{minipage}{0.4\textwidth}
+    \begin{flushleft} \large
+    \emph{Học viên thực hiện:}\\
+    Nguyễn Chí Thanh \\
+    MSHV: 21007925 \\ % Your name
+    Lớp: Khoa học dữ liệu - K4
+    \end{flushleft}
+    \end{minipage}
+
+
+    % If you don't want a supervisor, uncomment the two lines below and remove the section above
+    %\Large \emph{Author:}\\
+    %John \textsc{Smith}\\[3cm] % Your name
+
+    %----------------------------------------------------------------------------------------
+    %	DATE SECTION
+    %----------------------------------------------------------------------------------------
+
+    % I don't want day because it is English
+    % {\large \today}\\[2cm] % Date, change the \today to a set date if you want to be precise
+
+    %----------------------------------------------------------------------------------------
+    %	LOGO SECTION
+    %----------------------------------------------------------------------------------------
+
+    %\includegraphics{logo/rsz_3logo-khtn.png}\\[1cm] % Include a department/university logo - this will require the graphicx package
+
+    %----------------------------------------------------------------------------------------
+
+    \vfill % Fill the rest of the page with whitespace
+
+\end{titlepage}
+
+\nocite{*}
+
+\newpage
+
+\begin{baitap}
+    Ước lượng Bayes cho tham số của phân phối Poisson.
+
+    Đính kèm là dữ liệu tổng điều tra xã hội (GSS) của Mỹ từ năm 1972 đến năm 1998.
+
+    Người ta quan tâm đến số con trung bình (tỷ lệ sinh) của phụ nữ Mỹ ở độ tuổi 40 trong thập niên 1990 (YEAR$\geq$1990 \& AGE==40 \& FEMALE==1). 
+    Có 02 nhóm phụ nữ được nghiên cứu là nhóm có trình độ văn hoá trên phổ thông (DEG$\geq$3) và nhóm còn lại. 
+    Biết rằng số con sinh ra tuân theo phân phối Poisson.
+    
+    Từ dữ liệu và sử dụng thống kê Bayes, hãy:
+
+    \begin{enumerate}
+        \item Xác định phân phối của dữ liệu (likelihood)
+        \item Xác định phân phối hậu nghiệm của tỷ lệ sinh khi phân phối tiên nghiệm là:
+        \begin{enumerate}[label=(\alph*)]
+            \item Phân phối đều
+            \item Phân phối Gamma
+        \end{enumerate}
+        \item Nêu đặc điểm của các phân phối hậu nghiệm tìm được
+        \item Ước lượng tỷ lệ sinh của 02 nhóm phụ nữ
+        \item So sánh tỷ lệ sinh của 2 nhóm và đánh giá sự khác biệt (nếu có)
+    \end{enumerate}
+\end{baitap}
+
+\begin{loigiai}
+    \begin{enumerate}
+        \item Xác định phân phối của dữ liệu (likelihood):
+        
+        Ta biết số lượng con sinh ra tuân theo phân phối Poisson.
+        Ta gọi $X_i$ là số con sinh ra của một người phụ nữ thứ $i$ trong tập dữ liệu.
+        Ta gọi tỷ lệ sinh là $\lambda$.
+        Do $X \sim P(\lambda)$ nên:
+
+        \begin{equation*}
+            f(X=k \vert \lambda) = e^{-\lambda} \dfrac{\lambda^k}{k!}
+        \end{equation*}
+
+        Ta giả định các quan sát (những người phụ nữ) là độc lập:
+
+        \begin{equation*}
+            f(X_1=x_1,X_2=x_2,\dots, X_n=x_n \vert \lambda) = \prod_{i=1}^n f(X_i = x_i \vert \lambda)
+        \end{equation*}
+
+        với $n$ là số quan sát trong tập dữ liệu.
+
+        Vậy phân phối của dữ liệu là:
+
+        \begin{equation*}
+            \begin{aligned}
+                f(X_1=x_1,X_2=x_2,\dots, X_n=x_n \vert \lambda) &= \prod_{i=1}^n f(X_i = x_i \vert \lambda) \\
+                &= \prod_{i=1}^n e^{-\lambda} \dfrac{\lambda^{x_1}}{x_1!} \\
+                &= e^{-n\lambda} \dfrac{\lambda^{x_1 + x_2 + \dots + x_n}}{x_1! x_2! \dots x_n!} \\
+                &= e^{-n\lambda} \dfrac{\lambda^{\sum_{i=1}^n x_i}}{\prod_{i=1}^n x_i!}
+            \end{aligned}
+        \end{equation*}
+
+        \item Xác định phân phối hậu nghiệm của tỷ lệ sinh khi phân phối tiên nghiệm là:
+
+        Ta gọi $g(\lambda)$ là phân phối tiên nghiệm của $\lambda$.
+        Phân phối hậu nghiệm được tính bởi công thức:
+
+        \begin{equation*}
+            g(\lambda \vert X_1 =x_1, X_2=x_2, \dots, X_n=x_n) = \dfrac{g(\lambda) f(X_1=x_1,X_2=x_2,\dots, X_n=x_n \vert \lambda)}{\int g(\lambda) f(X_1=x_1,X_2=x_2,\dots, X_n=x_n \vert \lambda) d \lambda}
+        \end{equation*}
+
+        \begin{enumerate}[label=(\alph*)]
+            \item Phân phối đều
+            
+            Ta giả sử phân phối tiên nghiệm của $\lambda$ là:
+
+            \begin{equation*}
+                g(\lambda) = \begin{cases}
+                    \dfrac{1}{a} \text{ nếu } \lambda \in \lbrack 0; a\rbrack (a > 0) \\
+                    0 \text{ nếu ngược lại}
+                \end{cases}
+            \end{equation*}
+
+            Như vậy ta có phân phối hậu nghiệm $g(\lambda \vert X_1 =x_1, X_2=x_2, \dots, X_n=x_n)$ của $\lambda$ là:
+
+            \begin{equation*}
+                \begin{aligned}
+                    g(\lambda \vert X_1 =x_1, X_2=x_2, \dots, X_n=x_n) &= \dfrac{g(\lambda) f(X_1=x_1,X_2=x_2,\dots, X_n=x_n \vert \lambda)}{\int g(\lambda) f(X_1=x_1,X_2=x_2,\dots, X_n=x_n \vert \lambda) d \lambda} \\
+                    &= \dfrac{\dfrac{1}{a} e^{-n\lambda} \dfrac{\lambda^{\sum_{i=1}^n x_i}}{\prod_{i=1}^n x_i!}}{\displaystyle\int_{0}^{a} \dfrac{1}{a} e^{-n\lambda} \dfrac{\lambda^{\sum_{i=1}^n x_i}}{\prod_{i=1}^n x_i!} d \lambda} \\
+                            &= \dfrac{\dfrac{1}{a} e^{-n \lambda} \dfrac{(n\lambda)^{\sum_{i=1}^n x_i}}{\big(n^{\sum_{i=1}^n x_i}\big)\prod_{i=1}^n x_i!}}{\displaystyle\int_{0}^{a} \dfrac{1}{a} e^{-n\lambda} \dfrac{\lambda^{\sum_{i=1}^n x_i}}{\prod_{i=1}^n x_i!} d \lambda}
+                \end{aligned}
+            \end{equation*}
+
+            Ta nhận thấy các đại lượng $a$ (theo giả thiết), $n^{\sum_{i=1}^n x_i}$  (tập dữ liệu ta đã biết), $\displaystyle\int_{0}^{a} \dfrac{1}{a} e^{-n\lambda} \dfrac{\lambda^{\sum_{i=1}^n x_i}}{\prod_{i=1}^n x_i!} d \lambda$ đều là hằng số.
+            Nên phân phối hậu nghiệm $g(\lambda \vert X_1 =x_1, X_2=x_2, \dots, X_n=x_n)$ của $\lambda$ có dạng:
+
+            \begin{equation*}
+                \begin{aligned}
+                    g(\lambda \vert X_1 =x_1, X_2=x_2, \dots, X_n=x_n) &= \dfrac{\dfrac{1}{a} e^{-n \lambda} \dfrac{(n\lambda)^{\sum_{i=1}^n x_i}}{n^{\sum_{i=1}^n x_i}\prod_{i=1}^n x_i!}}{\displaystyle\int_{0}^{a} \dfrac{1}{a} e^{-n\lambda} \dfrac{\lambda^{\sum_{i=1}^n x_i}}{\prod_{i=1}^n x_i!} d \lambda} \\
+                    &\propto e^{-n\lambda}(n\lambda)^{\sum_{i=1}^n x_i}
+                \end{aligned}
+            \end{equation*}
+
+            Ta chú ý phân phối hậu nghiệm của $\lambda$ nên $\lambda$ là biến.
+            Mặt khác, ta có hàm mật độ xác suất của phân phối gamma (ta đặt biến ngẫu nhiên là $\lambda$ thay vì $x$ để dễ thấy sự tương tự giữa phân phối hậu nghiệm của $\lambda$ và phân phối gamma):
+
+            \begin{equation*}
+                \text{gamma}(\lambda; n, \alpha) = \begin{cases}
+                    \dfrac{n e^{-n\lambda} (n\lambda)^{\alpha - 1}}{\Gamma(\alpha)} \text{ nếu } \lambda > 0 \\
+                    0 \text{ nếu ngược lại}
+                \end{cases}
+            \end{equation*}
+
+            với hàm $\Gamma(\alpha)$ được định nghĩa bằng:
+
+            \begin{equation*}
+                \Gamma(\alpha) = \int_{0}^{\infty} e^{-y} y^{\alpha - 1} dy
+            \end{equation*}
+
+            Vì vậy:
+
+            \begin{equation*}
+                \begin{aligned}
+                    g(\lambda \vert X_1 =x_1, X_2=x_2, \dots, X_n=x_n) &\propto e^{-n\lambda}(n\lambda)^{\sum_{i=1}^n x_i} \\
+                    &\propto n e^{-n\lambda}(n\lambda)^{(\sum_{i=1}^n x_i + 1) - 1} \text{ (do } n \text{ đã biết)} \\
+                    &\propto \text{gamma}(\lambda; n, (\sum_{i=1}^n x_i) + 1)
+                \end{aligned}
+            \end{equation*}
+
+            \item Phân phối gamma
+            
+            Ta giả sử phân phối tiên nghiệm của $\lambda$ là:
+
+            \begin{equation*}
+                g(\lambda) = \text{gamma}(\lambda; r, \alpha) = \begin{cases}
+                    \dfrac{r e^{-r\lambda} (r\lambda)^{\alpha - 1}}{\Gamma(\alpha)}=\dfrac{r^{\alpha}e^{-r\lambda} \lambda^{\alpha - 1}}{\Gamma(\alpha)} \text{ nếu } \lambda > 0 \\
+                    0 \text{ nếu ngược lại}
+                \end{cases}
+            \end{equation*}
+
+            Như vậy ta có phân phối hậu nghiệm $g(\lambda \vert X_1 =x_1, X_2=x_2, \dots, X_n=x_n)$ của $\lambda$ là:
+
+            \begin{equation*}
+                \begin{aligned}
+                    g(\lambda \vert X_1 =x_1, X_2=x_2, \dots, X_n=x_n) &= \dfrac{g(\lambda) f(X_1=x_1,X_2=x_2,\dots, X_n=x_n \vert \lambda)}{\int g(\lambda) f(X_1=x_1,X_2=x_2,\dots, X_n=x_n \vert \lambda) d \lambda} \\
+                    &= \dfrac{\dfrac{r^{\alpha}e^{-r\lambda} \lambda^{\alpha - 1}}{\Gamma(\alpha)} \dfrac{e^{-n\lambda} \lambda^{\sum_{i=1}^n x_i}}{\prod_{i=1}^n x_i!}}{\displaystyle \int_{0}^{\infty} \dfrac{r^{\alpha}e^{-r\lambda} \lambda^{\alpha - 1}}{\Gamma(\alpha)}  \dfrac{e^{-n\lambda}\lambda^{\sum_{i=1}^n x_i}}{\prod_{i=1}^n x_i!} d \lambda} \\
+                    &= \dfrac{r^{\alpha}e^{-(n+r)\lambda} \lambda^{\sum_{i=1}^n x_i + \alpha - 1}}{\Gamma(\alpha)\prod_{i=1}^n x_i! \displaystyle \int_{0}^{\infty} \dfrac{r^{\alpha}e^{-r\lambda} \lambda^{\alpha - 1}}{\Gamma(\alpha)}  \dfrac{e^{-n\lambda}\lambda^{\sum_{i=1}^n x_i}}{\prod_{i=1}^n x_i!} d \lambda} \\
+                    &= \dfrac{r^{\alpha}e^{-(n+r)\lambda} \lambda^{\sum_{i=1}^n x_i + \alpha - 1}}{\Gamma(\alpha)\prod_{i=1}^n x_i! \dfrac{1}{\Gamma(\alpha)\prod_{i=1}^n x_i!} \displaystyle \int_{0}^{\infty} r^{\alpha}e^{-(n+r)\lambda} \lambda^{\sum_{i=1}^n x_i + \alpha - 1} d \lambda} \\
+                    &= \dfrac{e^{-(n+r)\lambda} \lambda^{\sum_{i=1}^n x_i + \alpha - 1}}{\displaystyle \int_{0}^{\infty} e^{-(n+r)\lambda} \lambda^{\sum_{i=1}^n x_i + \alpha - 1} d \lambda} \\
+                    &= 
+                \end{aligned}
+            \end{equation*}
+        \end{enumerate}
+    \end{enumerate}
+\end{loigiai}
+
+\newpage
+\printbibliography[title={TÀI LIỆU THAM KHẢO}]
+\end{document}
