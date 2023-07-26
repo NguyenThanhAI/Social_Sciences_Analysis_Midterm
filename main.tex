@@ -333,7 +333,111 @@
         
         Như ta đã chứng minh, khi phân phối tiên nghiệm là phân phối đều hoặc phân phối gamma thì phân phối hậu nghiệm đều có dạng phân phối gamma.
 
-        
+        Ta sẽ xét phân phối gamma $\text{gamma}(\lambda; r, \alpha)$ khi cả $r$ và $\alpha$ đều lớn.
+        Ta sử dụng công cụ hàm sinh mômen.
+        Cho một đại lượng ngẫu nhiên $Y$, khi đó nếu tồn tại $\mathbb{E}(e^{tY}), \forall \lvert t \rvert \leq k, k > 0$ bất kỳ.
+        Ta gọi $M(t) = \mathbb{E}(e^{tY})$ là hàm sinh moomen của $Y$:
+
+        Ta xét trường hợp $Z \sim \mathcal{N}(0; 1)$:
+
+        \begin{equation*}
+            \begin{aligned}
+                M(t) &= \mathbb{E}(e^{tz}) \\
+                &=\int_{-\infty}^{\infty} e^{tz} \dfrac{1}{\sqrt{2\pi}} e^{-\frac{z^2}{2}} dz \\
+                &=\int_{-\infty}^{\infty} \dfrac{1}{\sqrt{2\pi}} e^{-\dfrac{(y^2-2ty)}{2}} dy \\
+                &=\int_{-\infty}^{\infty} \dfrac{1}{\sqrt{2\pi}} e^{-\dfrac{(z-t)^2}{2}}e^{\dfrac{t^2}{2}} dz \\
+                &=e^{\dfrac{t^2}{2}}\int_{-\infty}^{\infty} \underbrace{\dfrac{1}{\sqrt{2\pi}} e^{-\dfrac{(z-t)^2}{2}}}_{\mathcal{N}(t;1)} dz \\
+                &=e^{\dfrac{t^2}{2}}\int_{-\infty}^{\infty} \mathcal{N}(t;1) dz \\
+                &=e^{\dfrac{t^2}{2}}
+            \end{aligned}
+        \end{equation*}
+
+        Ta xét với biến ngẫu nhiên $Y = aZ + b$, ta tìm hàm sinh mômen của $Z$ khi ta đã biến hàm sinh mômen của biến ngẫu nhiên $Y$:
+
+        \begin{equation*}
+            \begin{aligned}
+                M_Y (t) &= \mathbb{E} (e^{tZ}) \\
+                &= \mathbb{E} (e^{t(aZ + b)}) \\
+                &= \mathbb{E} (e^{t(aZ + b)}) \\
+                &= \mathbb{E} (e^{aZt}e^{bt}) \\
+                &= e^{bt} \mathbb{E}(e^{aZt}) \\
+                &= e^{bt} M_Z(at)
+            \end{aligned}
+        \end{equation*}
+
+        Vậy với biến ngẫu nhiên $Y \sim \mathcal{\mu; \sigma^2}$, ta có thể viết biến ngẫu nhiên $Y$ dưới dạng: $Y = \mu + \sigma Z$ với $Z \sim \mathcal{N}(0;1)$ nên:
+
+        \begin{equation*}
+            \begin{aligned}
+                M_Y(t) &= e^{\mu t} M_z(\sigma t) \\
+                &= e^{\mu t} e^{\dfrac{\sigma^2 t^2}{2}} \\
+                &= e^{\mu t + \dfrac{\sigma^2 t^2}{2}}
+            \end{aligned}
+        \end{equation*}
+
+        Ta tìm hàm sinh mômen của phân phối gamma:
+
+        \begin{equation*}
+            \begin{aligned}
+                M(t) &= \mathbb{E}(e^{t\lambda}) \\
+                &= \int_{-\infty}^{\infty} e^{t\lambda} \dfrac{r^{\alpha}e^{-r\lambda} \lambda^{\alpha-1}}{\Gamma(\alpha)} d\lambda (t < r) \\
+                &= \dfrac{r^{\alpha}}{\Gamma(\alpha)} \int_{-\infty}^{\infty} e^{-(r-t)\lambda} \lambda^{\alpha-1} d \lambda \\
+                &= \dfrac{r^{\alpha}}{\Gamma(\alpha)} \int_{-\infty}^{\infty} \dfrac{1}{(r-t)^{\alpha}} e^{-(r-t)\lambda} ((r-t)\lambda)^{\alpha-1} d (r-t)\lambda \\
+                &= \dfrac{r^{\alpha}}{\Gamma(\alpha)(r-t)^{\alpha}} \underbrace{\int_{-\infty}^{\infty} e^{-(r-t)\lambda} ((r-t)\lambda)^{\alpha-1} d (r-t)\lambda}_{\Gamma(\alpha)} \\
+                &= \dfrac{r^{\alpha} \Gamma(\alpha)}{(r-t)^{\alpha}\Gamma(\alpha)} \\
+                &= \dfrac{r^{\alpha}}{(r-t)^{\alpha}} \\
+                &= \Big( \dfrac{r}{r-t} \Big)^{\alpha}
+            \end{aligned}
+        \end{equation*}
+
+        \begin{dl} \label{dl:1}
+            Cho biến ngẫu nhiên $Y$ có hàm sinh mômen là $M_Y(t)$. 
+            Biến ngẫu nhiên $Z$ có hàm sinh mômen là $M_Z(t)$.
+            Với một số $k > 0$ tùy ý, nếu $\forall \lvert t \rvert < k$ thỏa mãn:
+            \begin{equation*}
+                M_Y(t) = M_Z(t) \forall \lvert t \vert < k
+            \end{equation*}
+            thì $Y$ và $Z$ cùng phân phối.
+        \end{dl}
+
+        Đối với hàm sinh mômen, khi $t$ đủ nhỏ, $r$ và $\alpha$ khá lớn, hàm sinh mômen $\Big( \dfrac{r}{r-t} \Big)^{\alpha}$ sẽ có dạng $1^{\infty}$.
+        Từ giới hạn cơ bản:
+
+        \begin{equation*}
+            \lim_{a \rightarrow 0} (1 + a)^{\frac{1}{a}} = e
+        \end{equation*}
+        Ta xét giới hạn:
+
+        \begin{equation*} 
+            \begin{aligned}
+                \lim_{\begin{subarray}{l} t \rightarrow 0 \\ r \rightarrow \infty \end{subarray}} \Big( \dfrac{r}{r-t} \Big)^{\alpha} &= \lim_{\begin{subarray}{l} t \rightarrow 0 \\ r \rightarrow \infty \end{subarray}} \Big( \dfrac{r-t + t}{r-t} \Big)^{\alpha} \\
+                &= \lim_{\begin{subarray}{l} t \rightarrow 0 \\ r \rightarrow \infty \end{subarray}} \Big(1 + \dfrac{t}{r-t} \Big)^{\alpha} \\
+                &= \lim_{\begin{subarray}{l} t \rightarrow 0 \\ r \rightarrow \infty \end{subarray}} \Big(1 + \dfrac{t}{r-t} \Big)^{\dfrac{r-t}{t} \dfrac{\alpha t}{r-t}} \\
+                &= \exp\Big(\dfrac{\alpha t}{r-t} \Big) \\
+                &= \exp\Bigg(\dfrac{\alpha t}{r(1 - \dfrac{t}{r})} \Bigg)
+            \end{aligned}
+        \end{equation*}
+
+        Ta sử dụng khai triển Maclaurin:
+        \begin{equation*}
+            \dfrac{1}{1-a} = 1 + a + a^2 + a^3 + \dots + a^n + o(a^n), \text{ miền hội tụ } \lvert a \rvert < 1
+        \end{equation*}
+
+        Như vậy:
+
+        \begin{equation*}
+            \begin{aligned}
+                \exp\Bigg(\dfrac{\alpha t}{r(1 - \dfrac{t}{r})} \Bigg) &= \exp\Bigg(\dfrac{\alpha t}{r}(1 + \dfrac{t}{r} + \dfrac{t^2}{r^2} + o(t^2)) \Bigg) \\
+                &\approx \exp\Bigg( \dfrac{\alpha t}{r} + \dfrac{\alpha t^2}{r^2}\Bigg)
+            \end{aligned}
+        \end{equation*}
+
+        Ta nhận thấy $\exp\Bigg( \dfrac{\alpha t}{r} + \dfrac{\alpha t^2}{r^2}\Bigg)$ chính là hàm sinh mômen của phân phối chuẩn $\mathcal{N}\Big(\dfrac{\alpha}{r}; \dfrac{\alpha}{r^2} \Big)$.
+        Khi $k > 0$ đủ nhỏ $\forall \lvert t \rvert <k$ và $r$ đủ lớn sao cho hàm sinh mômen của phân phối gamma xấp xỉ bằng hàm sinh mômen của phân phối chuẩn, theo định lý \ref{dl:1}:
+
+        \begin{equation*}
+            \text{gamma}(\lambda; r, \alpha) \approx \mathcal{N}\Big(\dfrac{\alpha}{r};\dfrac{\alpha}{r^2}\Big)
+        \end{equation*}
     \end{enumerate}
 \end{loigiai}
 
