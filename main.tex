@@ -635,8 +635,136 @@ plt.show()
         Ta sẽ thay số cho hai nhóm phụ nữ:
 
         \begin{itemize}
-            \item Nhóm có trình độ văn hóa trên phổ thông (DEG$\geq$3)
+            \item Nhóm có trình độ văn hóa trên phổ thông (DEG$\geq$3):
+            Từ tập dữ liệu, ta có các số liệu $n=44, \sum_{i=1}^n x_i=66$.
+            \begin{itemize}
+                \item Khi phân phối tiên nghiệm của tỷ lệ sinh là phân phối đều, ta áp dụng công thức ở trên để ước lượng $\hat{\lambda}$ theo mode của phân phối hậu nghiệm của tỷ lệ sinh là:
+                \begin{equation*}
+                    \hat{\lambda} = \dfrac{\sum_{i=1}^n x_i}{n} = \dfrac{66}{44}=1.5
+                \end{equation*}
+                \item Khi phân phối tiên nghiệm của tỷ lệ sinh là phân phối gamma, ta giả sử phân phối tiên nghiệm là:
+                \begin{equation*}
+                    g(\lambda) = g(\lambda) = \text{gamma}(\lambda; r=2, \alpha=10)
+                \end{equation*}
+                Ta áp dụng công thức ở trên để ước lượng $\hat{\lambda}$ theo mode của phân phối hậu nghiệm của tỷ lệ sinh:
+                \begin{equation*}
+                    \hat{\lambda} = \dfrac{\sum_{i=1}^n x_i + \alpha - 1}{n + r} = \dfrac{66+10-1}{44 + 2}\approx 1.6304
+                \end{equation*}
+            \end{itemize}
+            \item Nhóm có trình độ văn hóa dưới phổ thông (DEG$<$3):
+            Từ tập dữ liệu, ta có các số liệu $n=111, \sum_{i=1}^n x_i=217$.
+            \begin{itemize}
+                \item Khi phân phối tiên nghiệm của tỷ lệ sinh là phân phối đều, ta áp dụng công thức ở trên để ước lượng $\hat{\lambda}$ theo mode của phân phối hậu nghiệm của tỷ lệ sinh là:
+                \begin{equation*}
+                    \hat{\lambda} = \dfrac{\sum_{i=1}^n x_i}{n} = \dfrac{217}{111}\approx 1.9550
+                \end{equation*}
+                \item Khi phân phối tiên nghiệm của tỷ lệ sinh là phân phối gamma, ta giả sử phân phối tiên nghiệm là:
+                \begin{equation*}
+                    g(\lambda) = g(\lambda) = \text{gamma}(\lambda; r=2, \alpha=10)
+                \end{equation*}
+                Ta áp dụng công thức ở trên để ước lượng $\hat{\lambda}$ theo mode của phân phối hậu nghiệm của tỷ lệ sinh:
+                \begin{equation*}
+                    \hat{\lambda} = \dfrac{\sum_{i=1}^n x_i + \alpha - 1}{n + r} = \dfrac{217+10-1}{111 + 2}=2
+                \end{equation*}
+            \end{itemize}
         \end{itemize}
+
+        Ta ước lượng khoảng tin cậy cho tỷ lệ sinh của hai nhóm phụ nữ:
+
+        Ta sử dụng phương pháp Credible Interval, hay ta sẽ tìm một khoảng $\mathcal{C}$ sao cho:
+
+        \begin{equation*}
+            \int_{\mathcal{C}} g(\lambda \vert X_1 =x_1, X_2=x_2, \dots, X_n=x_n) d\lambda = 1 - \beta \text{ với } (0 < \beta < 1)
+        \end{equation*}
+
+        Ta sẽ chọn khoảng tin cậy đối xứng và độ tin cậy là $1-\beta=0.95$.
+        Ta đặt $\mathcal{C}=(l;r)$ với $l$ và $r$ là hai giá trị sao cho:
+
+        \begin{equation*}
+            \begin{aligned}
+                &\int_{0}^l g(\lambda \vert X_1 =x_1, X_2=x_2, \dots, X_n=x_n) d\lambda = \dfrac{\beta}{2}=0.025 \\
+                &\int_{0}^r g(\lambda \vert X_1 =x_1, X_2=x_2, \dots, X_n=x_n) d\lambda = 1-\dfrac{\beta}{2}=0.975
+            \end{aligned}
+        \end{equation*}
+
+        \begin{itemize}
+            \item Nhóm có trình độ văn hóa trên phổ thông (DEG$\geq$3):
+            Từ tập dữ liệu, ta có các số liệu $n=44, \sum_{i=1}^n x_i=66$.
+            \begin{itemize}
+                \item Trường hợp phân phối tiên nghiệm của tỷ lệ sinh là phân phối đều thì phân phối hậu nghiệm của tỷ lệ sinh:
+                \begin{equation*}
+                    g(\lambda \vert X_1 =x_1, X_2=x_2, \dots, X_n=x_n) \propto \text{gamma}\big(\lambda; n, (\sum_{i=1}^n x_i) + 1\big) = \text{gamma}\big(\lambda; 44, 67\big)
+                \end{equation*}
+
+                Ta sử dụng code R để tìm $l$ và $r$:
+
+                \begin{python}
+l <- qgamma(0.025, 67, 44);
+r <- qgamma(0.975, 67, 44);
+l
+r
+                \end{python}
+
+                Ta thu được $l\approx 1.1801, r\approx1.9084$.
+                Vậy khoảng tin cậy cho tỷ lệ sinh với độ tin cậy 0.95 là $(1.1801;1.9084)$.
+                \item Trường hợp phân phối tiên nghiệm của tỷ lệ sinh là phân phối gamma $g(\lambda) = \text{gamma}(\lambda; r, \alpha)=\text{gamma}(\lambda; 2, 10)$ thì phân phối hậu nghiệm của tỷ lệ sinh là:
+                \begin{equation*}
+                    g(\lambda \vert X_1 =x_1, X_2=x_2, \dots, X_n=x_n) = \text{gamma}\big(\lambda; 46, 76 \big)
+                \end{equation*}
+
+                Ta sử dụng code R để tìm $l$ và $r$:
+
+                \begin{python}
+l <- qgamma(0.025, 76, 46);
+r <- qgamma(0.975, 76, 46);
+l
+r
+                \end{python}
+
+                Ta thu được $l\approx 1.3017, r\approx2.0438$.
+                Vậy khoảng tin cậy cho tỷ lệ sinh với độ tin cậy 0.95 là $(1.3017;2.0438)$.
+            \end{itemize}
+            \item Nhóm có trình độ văn hóa trên phổ thông (DEG$<$3):
+            Từ tập dữ liệu, ta có các số liệu $n=111, \sum_{i=1}^n x_i=217$.
+            \begin{itemize}
+                \item Trường hợp phân phối tiên nghiệm của tỷ lệ sinh là phân phối đều thì phân phối hậu nghiệm của tỷ lệ sinh:
+                \begin{equation*}
+                    g(\lambda \vert X_1 =x_1, X_2=x_2, \dots, X_n=x_n) \propto \text{gamma}\big(\lambda; n, (\sum_{i=1}^n x_i) + 1\big) = \text{gamma}\big(\lambda; 111, 218\big)
+                \end{equation*}
+
+                Ta sử dụng code R để tìm $l$ và $r$:
+
+                \begin{python}
+l <- qgamma(0.025, 218, 111);
+r <- qgamma(0.975, 218, 111);
+l
+r
+                \end{python}
+
+                Ta thu được $l\approx 1.7119, r\approx2.2331$.
+                Vậy khoảng tin cậy cho tỷ lệ sinh với độ tin cậy 0.95 là $(1.7119;2.2331)$.
+                \item Trường hợp phân phối tiên nghiệm của tỷ lệ sinh là phân phối gamma $g(\lambda) = \text{gamma}(\lambda; r, \alpha)=\text{gamma}(\lambda; 2, 10)$ thì phân phối hậu nghiệm của tỷ lệ sinh là:
+                \begin{equation*}
+                    g(\lambda \vert X_1 =x_1, X_2=x_2, \dots, X_n=x_n) = \text{gamma}\big(\lambda; 113, 227 \big)
+                \end{equation*}
+
+                Ta sử dụng code R để tìm $l$ và $r$:
+
+                \begin{python}
+l <- qgamma(0.025, 227, 113);
+r <- qgamma(0.975, 227, 113);
+l
+r
+                \end{python}
+
+                Ta thu được $l\approx 1.7560, r\approx2.2785$.
+                Vậy khoảng tin cậy cho tỷ lệ sinh với độ tin cậy 0.95 là $(1.7560;2.2785)$.
+            \end{itemize}
+        \end{itemize}
+
+
+        Ta sử dụng phương pháp ước lượng khoảng tin cậy cho trung bình của phân phối chuẩn.
+        Do khi $n$ và $\sum_{i=1}^n x_i$ đủ lớn, phân phối hậu nghiệm cho tỷ lệ sinh là phân phối gamma đã được chứng minh xấp xỉ phân phối chuẩn.
     \end{enumerate}
 \end{loigiai}
 
