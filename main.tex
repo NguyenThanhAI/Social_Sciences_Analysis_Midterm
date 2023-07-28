@@ -438,6 +438,205 @@
         \begin{equation*}
             \text{gamma}(\lambda; r, \alpha) \approx \mathcal{N}\Big(\dfrac{\alpha}{r};\dfrac{\alpha}{r^2}\Big)
         \end{equation*}
+
+        Để kiểm chứng kết quả lý thuyết trên, ta sẽ vẽ phân phối $\text{gamma}(\lambda; 30, 90) (r=30, \alpha=90)$ và phân phối chuẩn $\mathcal{N}\Big(\dfrac{\alpha}{r}=\dfrac{90}{30}=3, \dfrac{\alpha}{r^2}=\dfrac{1}{10}\Big)$ bằng đoạn code:
+
+        \begin{python}
+def gamma_pdf(x, r: float, alpha: float):
+    return (r**alpha * np.exp(-r*x) * x**(alpha - 1)) / gamma(alpha)
+
+
+def normal_pdf(x, mu: float, sigma: float):
+    return ((1/(sigma * np.sqrt(2*np.pi))) * np.exp(-((x-mu)**2/(2*sigma**2))))
+
+gamma_pdf_vector = np.vectorize(gamma_pdf)
+normal_pdf_vector = np.vectorize(normal_pdf)
+x = np.linspace(0, 6, 1000)
+gamma_distribution = gamma_pdf_vector(x, 30, 90)
+normal_approx_of_gamma_distribution = normal_pdf_vector(x, 90/30, np.sqrt(90/(30**2)))
+            
+plt.plot(x, gamma_distribution, label="gamma distribution", linestyle="solid")
+plt.plot(x, normal_approx_of_gamma_distribution, label="normal approximation of gamma distribution", linestyle="dashed")
+plt.legend()
+plt.grid()
+plt.show()
+        \end{python}
+
+        \begin{figure}[h]
+            \centering
+            \includegraphics[width=0.6\linewidth]{figures/gamma_normal_approximation.png}
+            \caption{Minh họa phân phối gamma xấp xỉ phân phối chuẩn khi hai tham số $r$ và $\alpha$ lớn}
+            \label{fig:gamma_normal_approximation}
+        \end{figure}
+        Hình \ref{fig:gamma_normal_approximation} cho ta thấy phân phối gamma $\text{gamma}(\lambda; 30, 90)$ khi $r=30, \alpha=90$ xấp xỉ phân phối chuẩn $\mathcal{N}\Big(3, \dfrac{1}{10}\Big)$.
+        Đỉnh (mode) của phân phối gamma nằm bên trái một chút so với phân phối chuẩn.
+        Do đối với phân phối chuẩn trung bình và mode bằng nhau và bằng $\dfrac{\alpha}{r}$ còn đối với phân phối gamma mode bằng $\dfrac{\alpha - 1}{r}$.
+
+        \item Ước lượng tỷ lệ sinh của 02 nhóm phụ nữ
+        
+        Để ước lượng tỷ lệ sinh của hai nhóm phụ nữ.
+        Ta có thể sử dụng lấy trung bình hoặc mode của phân phối hậu nghiệm của tỷ lệ sinh của hai nhóm tương ứng.
+        Đầu tiên ta sẽ tìm trung bình và mode từ phân phối hậu nghiệm lý thuyết của tỷ lệ sinh khi phân phối tiên nghiệm là phân phối đều hoặc phân phối tiên nghiệm là phân phối gamma
+        Ta gọi $\hat{\lambda}$ là ước lượng của $\lambda$
+        \begin{itemize}
+            \item Phân phối tiên nghiệm là phân phối đều:
+            
+            Ta giả sử phân phối tiên nghiệm của $\lambda$ là:
+
+            \begin{equation*}
+                g(\lambda) = \begin{cases}
+                    \dfrac{1}{a} \text{ nếu } \lambda \in \lbrack 0; a\rbrack (a > 0) \\
+                    0 \text{ nếu ngược lại}
+                \end{cases}
+            \end{equation*}
+
+            Ở câu 2, ta đã biết phân phối hậu nghiệm $g(\lambda \vert X_1 =x_1, X_2=x_2, \dots, X_n=x_n)$ có dạng phân phối gamma:
+
+            \begin{equation*}
+                g(\lambda \vert X_1 =x_1, X_2=x_2, \dots, X_n=x_n) \propto \text{gamma}\big(\lambda; n, (\sum_{i=1}^n x_i) + 1\big)
+            \end{equation*}
+
+            Nếu $\hat{\lambda}$ được tính theo trung bình của phân phối hậu nghiệm,
+            ta gọi ước lượng này là $\hat{\lambda}_1$:
+
+            \begin{equation*}
+                \hat{\lambda}_1 = \dfrac{(\sum_{i=1}^n x_i) + 1}{n}
+            \end{equation*}
+
+            Ta tính bias của $\hat{\lambda}_1$:
+
+            \begin{equation*}
+                \text{bias}(\hat{\lambda}_1) = \mathbb{E} \lbrack \hat{\lambda}_1 \rbrack - \lambda = \dfrac{n\lambda + 1}{n} - \lambda = \dfrac{1}{n}
+            \end{equation*}
+
+            Như vậy $\lambda$ được ước lượng theo trung bình của phân phối hậu nghiệm là ước lượng chệch của $\lambda$.
+
+            Ta tính phương sai của $\hat{\lambda}_1$:
+            
+            \begin{equation*}
+                \text{Var}(\hat{\lambda}_1) = \dfrac{\lambda}{n}
+            \end{equation*}
+
+            Như vậy sai số trung bình của ước lượng $\hat{\lambda}_1$:
+
+            \begin{equation*}
+                \text{MS}(\hat{\lambda}_1) = \text{Var}(\hat{\lambda}_1) + (\text{bias}(\hat{\lambda}_1))^2 = \dfrac{\lambda}{n} + \dfrac{1}{n^2}
+            \end{equation*}
+
+            Nếu $\hat{\lambda}$ được tính theo mode của phân phối hậu nghiệm,
+            ta gọi ước lượng này là $\hat{\lambda}_2$:
+
+            \begin{equation*}
+                \hat{\lambda}_2 = \dfrac{(\sum_{i=1}^n x_i) + 1 - 1}{n} = \dfrac{\sum_{i=1}^n x_i}{n}
+            \end{equation*}
+
+            Ta tính bias của $\hat{\lambda}_2$:
+
+            \begin{equation*}
+                \text{bias}(\hat{\lambda}_2) = \mathbb{E} \lbrack \hat{\lambda}_2 \rbrack - \lambda = \dfrac{n\lambda}{n} - \lambda = 0
+            \end{equation*}
+
+            Như vậy $\lambda$ được ước lượng theo mode của phân phối hậu nghiệm là ước lượng không chệch của $\lambda$.
+
+            Ta tính phương sai của $\hat{\lambda}_2$:
+
+            \begin{equation*}
+                \text{Var}(\hat{\lambda}_2) = \dfrac{\lambda}{n}
+            \end{equation*}
+
+            Như vậy sai số trung bình của ước lượng $\hat{\lambda}_2$:
+
+            \begin{equation*}
+                \text{MS}(\hat{\lambda}_2) = \text{Var}(\hat{\lambda}_2) + (\text{bias}(\hat{\lambda}_2))^2 = \dfrac{\lambda}{n} < \dfrac{\lambda}{n} + \dfrac{1}{n^2}
+            \end{equation*}
+
+            Như vậy ta thấy ước lượng $\lambda$ được ước lượng theo mode của phân phối hậu nghiệm vừa là ước lượng không chệch và là ước lượng hiệu quả hơn khi $\lambda$ được ước lượng theo trung bình của phân phối hậu nghiệm.
+            Nên đối với ước lượng điểm, ta sẽ chọn ước lượng theo mode của phân phối hậu nghiệm.
+
+            \item Phân phối tiên nghiệm là phân phối gamma:
+            
+            Ta giả sử phân phối tiên nghiệm của $\lambda$ là:
+
+            \begin{equation*}
+                g(\lambda) = \text{gamma}(\lambda; r, \alpha) = \begin{cases}
+                    \dfrac{r e^{-r\lambda} (r\lambda)^{\alpha - 1}}{\Gamma(\alpha)}=\dfrac{r^{\alpha}e^{-r\lambda} \lambda^{\alpha - 1}}{\Gamma(\alpha)} \text{ nếu } \lambda > 0 \\
+                    0 \text{ nếu ngược lại}
+                \end{cases}
+            \end{equation*}
+
+            Ở câu 2, ta đã biết phân phối hậu nghiệm $g(\lambda \vert X_1 =x_1, X_2=x_2, \dots, X_n=x_n)$ có dạng phân phối gamma:
+
+            \begin{equation*}
+                g(\lambda \vert X_1 =x_1, X_2=x_2, \dots, X_n=x_n) = \text{gamma}\big(\lambda; (n+r), (\sum_{i=1}^n x_i) + \alpha \big)
+            \end{equation*}
+
+            Tương tự như trong trường hợp phân phối tiên nghiệm, ta cũng ước lượng tỷ lệ sinh theo hai cách là tính trung bình và mode của phân phối hậu nghiệm của tỷ lệ sinh.
+
+            Nếu $\hat{\lambda}$ được tính theo trung bình của phân phối hậu nghiệm,
+            ta gọi ước lượng này là $\hat{\lambda}_3$:
+
+            \begin{equation*}
+                \hat{\lambda}_3 = \dfrac{(\sum_{i=1}^n x_i) + \alpha}{n + r}
+            \end{equation*}
+
+            Ta tính bias của $\hat{\lambda}_3$:
+
+            \begin{equation*}
+                \text{bias}(\hat{\lambda}_3) = \mathbb{E} \lbrack \hat{\lambda}_3 \rbrack - \lambda = \dfrac{n\lambda + \alpha}{n + r} - \lambda = \dfrac{\alpha - r\lambda}{n + r}
+            \end{equation*}
+
+            Khi $\lambda = \dfrac{\alpha}{r}$, $\hat{\lambda}_3$ sẽ là ước lượng không chệch của tỷ lệ sinh, nhưng nói chung $\hat{\lambda}_3$ là ước lượng chệch của tỷ lệ sinh
+
+            Ta tính phương sai của $\hat{\lambda}_3$:
+            
+            \begin{equation*}
+                \text{Var}(\hat{\lambda}_3) = \dfrac{n\lambda}{(n+r)^2} \text{ (do } \alpha \text{ là hằng số)}
+            \end{equation*}
+
+            Như vậy sai số trung bình của ước lượng $\hat{\lambda}_3$:
+
+            \begin{equation*}
+                \text{MS}(\hat{\lambda}_3) = \text{Var}(\hat{\lambda}_3) + (\text{bias}(\hat{\lambda}_3))^2 = \dfrac{n\lambda}{(n+r)^2} + \Big( \dfrac{\alpha - r\lambda}{n + r} \Big)^2
+            \end{equation*}
+            
+            Nếu $\hat{\lambda}$ được tính theo mode của phân phối hậu nghiệm,
+            ta gọi ước lượng này là $\hat{\lambda}_4$:
+
+            \begin{equation*}
+                \hat{\lambda}_4 = \dfrac{(\sum_{i=1}^n x_i) + \alpha - 1}{n + r}
+            \end{equation*}
+
+            Ta tính bias của $\hat{\lambda}_4$:
+
+            \begin{equation*}
+                \text{bias}(\hat{\lambda}_4) = \mathbb{E} \lbrack \hat{\lambda}_4 \rbrack - \lambda = \dfrac{n\lambda + \alpha - 1}{n + r} - \lambda = \dfrac{\alpha - 1 - r\lambda}{n + r}
+            \end{equation*}
+
+            Khi $\lambda = \dfrac{\alpha - 1}{r}$, $\hat{\lambda}_3$ sẽ là ước lượng không chệch của tỷ lệ sinh, nhưng nói chung $\hat{\lambda}_4$ là ước lượng chệch của tỷ lệ sinh.
+
+            Ta tính phương sai của $\hat{\lambda}_4$:
+
+            \begin{equation*}
+                \text{Var}(\hat{\lambda}_4) = \dfrac{n\lambda}{(n+r)^2} \text{ (do } \alpha - 1 \text{ là hằng số)}
+            \end{equation*}
+
+            Sai số trung bình của ước lượng $\hat{\lambda}_4$:
+
+            \begin{equation*}
+                \text{MS}(\hat{\lambda}_4) = \text{Var}(\hat{\lambda}_4) + (\text{bias}(\hat{\lambda}_4))^2 = \dfrac{n\lambda}{(n+r)^2} + \Big( \dfrac{\alpha - 1 - r\lambda}{n + r} \Big)^2 < \text{MS}(\hat{\lambda}_3)
+            \end{equation*}
+
+            Ta nhận thấy cả hai cách ước lượng sử dụng trung bình hoặc mode của phân phối hậu nghiệm của tỷ lệ sinh là ước lượng không chệch và sai số trung bình của ước lượng $\hat{\lambda}_4$ nhỏ hơn sai số trung bình của ước lượng $\hat{\lambda}_3$
+            Nhưng khi $n$ (số quan sát) lớn, $r$ và $\alpha$ tương đối lớn thì chênh lệch sai số trung bình của hai cách ước lượng trên là không nhiều.
+            Nhưng trong trường hợp này ta vẫn sẽ chọn cách ước lượng theo mode của phân phối hậu nghiệm.
+
+        \end{itemize}
+
+        Ta sẽ thay số cho hai nhóm phụ nữ:
+
+        \begin{itemize}
+            \item Nhóm có trình độ văn hóa trên phổ thông (DEG$\geq$3)
+        \end{itemize}
     \end{enumerate}
 \end{loigiai}
 
