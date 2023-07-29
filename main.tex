@@ -440,6 +440,90 @@ posterior_loop_gamma_deg_geq_3 = compute_posterior_loop(prior=prior_gamma, lamda
         \end{python}
         Ta tính giá trị của phân phối hậu nghiệm tại các điểm bằng (cho từng quan sát, hậu nghiệm ở bước trước trở thành tiên nghiệm ở bước sau) vòng lặp trong trường hợp phân phối tiên nghiệm là phân phối đều và phân phối gamma cho nhóm phụ nữ có trình độ văn hóa trên phổ thông (DEG $\geq$ 3)
 
+        \begin{python}
+def plot_posterior_comparison(lamdas, pos_theory, pos_loop, prior_type="uniform"):
+    plt.plot(lamdas, pos_theory, label="posterior {} theory".format(prior_type), linestyle="dashed")
+    plt.plot(lamdas, pos_loop, label="posterior loop", linestyle="dotted")
+    plt.grid()
+    plt.legend()
+    plt.show()
+        \end{python}
+
+        Hàm vẽ so sánh phân phối hậu nghiệm từ lý thuyết và phân phối hậu nghiệm từ vòng lặp (cho từng quan sát cho từng quan sát, hậu nghiệm ở bước trước trở thành tiên nghiệm ở bước sau)
+
+        \begin{python}
+plot_posterior_comparison(lamdas=lamdas, pos_theory=posterior_theory_uniform_deg_geq_3, pos_loop=posterior_loop_uniform_deg_geq_3, prior_type="uniform")
+        \end{python}
+
+        Ta vẽ so sánh phân phối hậu nghiệm được tính từ lý thuyết và vòng lặp khi phân phối tiên nghiệm là phân phối đều cho nhóm phụ nữ có trình độ văn hóa trên phổ thông (DEG $\geq$ 3)
+
+        \begin{figure}[h!]
+            \centering
+            \includegraphics[width=0.6\linewidth]{figures/posterior_loop_theory_uniform_deg_geq_3.png}
+            \caption{Phân phối hậu nghiệm được tính từ lý thuyết và vòng lặp khi phân phối tiên nghiệm là phân phối đều cho nhóm phụ nữ có trình độ văn hóa trên phổ thông (DEG $\geq$ 3)}
+            \label{fig:posterior_loop_theory_uniform_deg_geq_3}
+        \end{figure}
+
+        \begin{python}
+plot_posterior_comparison(lamdas=lamdas, pos_theory=posterior_theory_gamma_deg_geq_3, pos_loop=posterior_loop_gamma_deg_geq_3, prior_type="gamma")
+        \end{python}
+
+        Vẽ so sánh phân phối hậu nghiệm được tính từ lý thuyết và vòng lặp khi phân phối tiên nghiệm là phân phối gamma ($r=2$ và $\alpha=10$) cho nhóm phụ nữ có trình độ văn hóa trên phổ thông (DEG $\geq$ 3)
+
+        \begin{figure}[h!]
+            \centering
+            \includegraphics[width=0.6\linewidth]{figures/posterior_loop_theory_gamma_deg_geq_3.png}
+            \caption{Phân phối hậu nghiệm được tính từ lý thuyết và vòng lặp khi phân phối tiên nghiệm là phân phối gamma ($r=2$ và $\alpha=10$) cho nhóm phụ nữ có trình độ văn hóa trên phổ thông (DEG $\geq$ 3)}
+            \label{fig:posterior_loop_theory_gamma_deg_geq_3}
+        \end{figure}
+
+        Từ hình \ref{fig:posterior_loop_theory_uniform_deg_geq_3} và hình \ref{fig:posterior_loop_theory_gamma_deg_geq_3}, ta nhận thấy phân phối hậu nghiệm của tỷ lệ sinh được tính từ lý thuyết và được tính từ thực nghiệm của nhóm phụ nữ có trình độ văn hóa trên phổ thông (DEG $\geq$ 3) là gần như hoàn toàn trùng khớp.
+
+        \begin{python}
+posterior_theory_uniform_deg_less_3 = normal_pdf_vector(lamdas, ((child_total_deg_less_3 + 1)/n_deg_less_3), np.sqrt((child_total_deg_less_3 + 1)/(n_deg_less_3**2)))
+posterior_theory_uniform_deg_less_3 = posterior_theory_uniform_deg_less_3/np.sum(posterior_theory_uniform_deg_less_3)
+posterior_theory_gamma_deg_less_3 = normal_pdf_vector(lamdas, ((child_total_deg_less_3 + alpha)/(n_deg_less_3 + r)), np.sqrt((child_total_deg_less_3 + alpha)/((n_deg_less_3 + r)**2)))
+posterior_theory_gamma_deg_less_3 = posterior_theory_gamma_deg_less_3/np.sum(posterior_theory_gamma_deg_less_3)
+        \end{python}
+
+        Ta tính phân phối hậu nghiệm lý thuyết khi phân phối tiên nghiệm cho tỷ lệ sinh là phân phối đều và phân phối tiên nghiệm cho tỷ lệ sinh là phân phối gamma cho nhóm phụ nữ có trình độ văn hóa còn lại (DEG $<$ 3) 
+
+        \begin{python}
+posterior_loop_uniform_deg_less_3 = compute_posterior_loop(prior=prior_uniform, lamdas=lamdas, observes=df_deg_less_3.CHILDS.to_numpy())
+posterior_loop_gamma_deg_less_3 = compute_posterior_loop(prior=prior_gamma, lamdas=lamdas, observes=df_deg_less_3.CHILDS.to_numpy())
+        \end{python}
+
+        Ta tính giá trị của phân phối hậu nghiệm tại các điểm bằng vòng lặp (cho từng quan sát, hậu nghiệm ở bước trước trở thành tiên nghiệm ở bước sau) khi phân phối tiên nghiệm cho tỷ lệ sinh là phân phối đều và phân phối tiên nghiệm cho tỷ lệ sinh là phân phối gamma cho nhóm phụ nữ có trình độ văn hóa còn lại (DEG $<$ 3)
+
+        \begin{python}
+plot_posterior_comparison(lamdas=lamdas, pos_theory=posterior_theory_uniform_deg_less_3, pos_loop=posterior_loop_uniform_deg_less_3, prior_type="uniform")
+        \end{python}
+
+        Ta vẽ so sánh phân phối hậu nghiệm được tính từ lý thuyết và vòng lặp khi phân phối tiên nghiệm cho tỷ lệ sinh là phân phối đều cho nhóm phụ nữ có trình độ văn hóa còn lại (DEG $<$ 3)
+
+        \begin{figure}[h!]
+            \centering
+            \includegraphics[width=0.6\linewidth]{figures/posterior_loop_theory_uniform_deg_less_3.png}
+            \caption{Phân phối hậu nghiệm được tính từ lý thuyết và vòng lặp khi phân phối tiên nghiệm cho tỷ lệ sinh là phân phối đều cho nhóm phụ nữ có trình độ văn hóa còn lại (DEG $<$ 3)}
+            \label{fig:posterior_loop_theory_uniform_deg_less_3}
+        \end{figure}
+
+        \begin{python}
+plot_posterior_comparison(lamdas=lamdas, pos_theory=posterior_theory_gamma_deg_less_3, pos_loop=posterior_loop_gamma_deg_less_3, prior_type="gamma")
+        \end{python}
+
+        Vẽ so sánh phân phối hậu nghiệm được tính từ lý thuyết và vòng lặp khi phân phối tiên nghiệm là phân phối gamma ($r=2$ và $\alpha=10$) nhóm phụ nữ có trình độ văn hóa còn lại (DEG $<$ 3)
+
+        \begin{figure}[h!]
+            \centering
+            \includegraphics[width=0.6\linewidth]{figures/posterior_loop_theory_gamma_deg_less_3.png}
+            \caption{Phân phối hậu nghiệm được tính từ lý thuyết và vòng lặp khi phân phối tiên nghiệm là phân phối gamma ($r=2$ và $\alpha=10$) nhóm phụ nữ có trình độ văn hóa còn lại (DEG $<$ 3)}
+            \label{fig:posterior_loop_theory_gamma_deg_less_3}
+        \end{figure}
+
+        Từ hình \ref{fig:posterior_loop_theory_uniform_deg_less_3} và hình \ref{fig:posterior_loop_theory_gamma_deg_less_3}, ta nhận thấy phân phối hậu nghiệm của tỷ lệ sinh được tính từ lý thuyết và được tính từ thực nghiệm của nhóm phụ nữ có trình độ văn hóa còn lại (DEG $<$ 3) là gần như hoàn toàn trùng khớp.
+
+        \textbf{Nhận xét:} Ta nhận thấy kết quả lý thuyết tìm được và kết quả nhận được từ thực nghiệm (sử dụng vòng lặp cho từng quan sát, hậu nghiệm ở bước trước trở thành tiên nghiệm ở bước sau) cho các phân phối của tỷ lệ sinh là trùng khớp với nhau.
 
         \item Đặc điểm của các phân phối hậu nghiệm tìm được là:
         
