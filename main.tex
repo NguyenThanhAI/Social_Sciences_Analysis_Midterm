@@ -644,7 +644,7 @@ plt.show()
                 \end{equation*}
                 \item Khi phân phối tiên nghiệm của tỷ lệ sinh là phân phối gamma, ta giả sử phân phối tiên nghiệm là:
                 \begin{equation*}
-                    g(\lambda) = g(\lambda) = \text{gamma}(\lambda; r=2, \alpha=10)
+                    g(\lambda) = \text{gamma}(\lambda; r=2, \alpha=10)
                 \end{equation*}
                 Ta áp dụng công thức ở trên để ước lượng $\hat{\lambda}$ theo mode của phân phối hậu nghiệm của tỷ lệ sinh:
                 \begin{equation*}
@@ -865,6 +865,161 @@ r
         
     \item So sánh tỷ lệ sinh của 2 nhóm và đánh giá sự khác biệt (nếu có)
     
+    Ta sẽ giả định hai nhóm phụ nữ có tỷ lệ sinh cùng phân phối tiên nghiệm (cùng là phân phối đều hoặc cùng phân phối gamma (cùng các tham số $r$ và $\alpha$))
+
+    Do phân phối hậu nghiệm của tỷ lệ sinh đều có dạng xấp xỉ chuẩn nên để so sánh tỷ lệ sinh của 2 nhóm phụ nữ, ta sẽ so sánh kỳ vọng của hai phân phối hậu nghiệm.
+    
+    \begin{itemize}
+        \item Trường hợp phân phối tiên nghiệm của tỷ lệ sinh là phân phối đều:
+        Phân phối hậu nghiệm của tỷ lệ sinh của nhóm có trình độ văn hóa trên phổ thông (DEG$\geq$3) là:
+
+        \begin{equation*}
+            \begin{aligned}
+                g(\lambda \vert X_1 =x_1, X_2=x_2, \dots, X_n=x_n) &\propto \text{gamma}\big(\lambda; n, (\sum_{i=1}^n x_i) + 1\big) \\
+                &= \text{gamma}\big(\lambda; 44, 67\big) \\
+                &\approx \mathcal{N} \Big(\dfrac{67}{44}; \dfrac{67}{44^2} \Big)
+            \end{aligned}
+        \end{equation*}
+
+        Phân phối hậu nghiệm của tỷ lệ sinh của nhóm có trình độ văn hóa còn lại (DEG$<$3) là:
+
+        \begin{equation*}
+            \begin{aligned}
+                g(\lambda \vert X_1 =x_1, X_2=x_2, \dots, X_n=x_n) &\propto \text{gamma}\big(\lambda; n, (\sum_{i=1}^n x_i) + 1\big) \\
+                &= \text{gamma}\big(\lambda; 111, 218\big) \\
+                &\approx \mathcal{N} \Big( \dfrac{218}{111}; \dfrac{218}{111^2} \Big)
+            \end{aligned}
+        \end{equation*}
+
+        Ta vẽ phân phối hậu nghiệm của tỷ lệ sinh của hai nhóm phụ nữ khi phân phối tiên nghiệm là phân phối đều bằng đoạn code:
+
+        \begin{python}
+x = np.linspace(0.5, 3, 1000)
+
+normal_approx_deg_geq_3 = normal_pdf_vector(x, (child_total_deg_geq_3 + 1)/n_deg_geq_3, np.sqrt((child_total_deg_geq_3 + 1)/(n_deg_geq_3**2)))
+normal_approx_deg_less_3 = normal_pdf_vector(x, (child_total_deg_less_3 + 1)/n_deg_less_3, np.sqrt((child_total_deg_less_3 + 1)/(n_deg_less_3**2)))
+            
+plt.plot(x, normal_approx_deg_geq_3, label="posterior of deg $\geq$ 3, prior uniform", linestyle="solid")
+plt.plot(x, normal_approx_deg_less_3, label="posterior of deg < 3, prior uniform", linestyle="solid")
+plt.legend()
+plt.grid()
+plt.show()
+        \end{python}
+
+        \begin{figure}[h]
+            \centering
+            \includegraphics[width=0.6\linewidth]{figures/posterior_prior_uniform.png}
+            \caption{So sánh phân phối hậu nghiệm tỷ lệ sinh của 2 nhóm phụ nữ khi phân phối tiên nghiệm của tỷ lệ sinh đều là phân phối đều}
+            \label{fig:posterior_prior_uniform}
+        \end{figure}
+    
+        Từ hình \ref{fig:posterior_prior_uniform}, ta nhận thấy tỷ lệ sinh trung bình của nhóm phụ nữ có trình độ văn hóa trên phổ thông có xu hướng nhỏ hơn tỷ lệ sinh trung bình của phụ nữ có trình độ văn hóa còn lại.
+        Ta gọi kỳ vọng của phân phối hậu nghiệm của tỷ lệ sinh của nhóm có trình độ văn hóa trên phổ thông (DEG$\geq$3) là $\mu_1$ và kỳ vọng của phân phối hậu nghiệm của tỷ lệ sinh của nhóm có trình độ văn hóa còn lại là $\mu_2$.
+        Ta xét bài toán kiểm định:
+    
+        \begin{equation*}
+            \begin{cases}
+                H_0: \mu_1 = \mu_2 \\
+                H_1: \mu_1 < \mu_2
+            \end{cases}
+        \end{equation*}
+    
+        Do quan sát của hai nhóm phụ nữ đều lớn trên 30 (44 và 111), ta dùng tiêu chuẩn:
+    
+        \begin{equation*}
+            T = \dfrac{\bar{\lambda}_1 - \bar{\lambda}_2}{\sqrt{s_1^2 + s_2^2}}
+        \end{equation*}
+    
+        với $\bar{\lambda}_1=\dfrac{67}{44}, \bar{\lambda}_2=\dfrac{218}{111}$, $s_1^2=\dfrac{67}{44^2}, s_2^2=\dfrac{218}{111^2}$
+        Ở công thức tiêu chuẩn kiểm định, ở các vị trí cho phương sai không có chia cho lực lượng của các nhóm vì ta đang tính trên phân phối hậu nghiệm, phương sai đã được tính từ các quan sát.
+        Trong trường hợp thông thường, các giá trị phương sai $\dfrac{\sigma^2}{n}$ là phương sai của mẫu quan sát được.
+    
+        Ta có miền bác bỏ giả thiết $H_0$:
+    
+        \begin{equation*}
+            B_{\beta}= \lbrace T: T < z_{\beta} \rbrace
+        \end{equation*}
+        với $\beta$ là mức ý nghĩa. Ta chọn mức ý nghĩa $\beta=0.05$, vậy $z_{0.05}\approx-1.6449$
+    
+        Ta tính $T=\dfrac{\dfrac{67}{44} - \dfrac{218}{111}}{\sqrt{\dfrac{67}{44^2} + \dfrac{218}{111^2}}}\approx-1.9294 \in B_{0.05}$
+    
+        Ta nhận thấy $T$ đã thuộc vào miền bác $H_0$, vậy nên ta bác bỏ $H_0$, chấp nhận $H_1$
+    
+        \item Trường hợp phân phối tiên nghiệm của tỷ lệ sinh là phân phối gamma $g(\lambda) = \text{gamma}(\lambda; r, \alpha)=\text{gamma}(\lambda; 2, 10)$ (ta chọn $r=2, \alpha=10$):
+        
+        Phân phối hậu nghiệm của tỷ lệ sinh của nhóm có trình độ văn hóa trên phổ thông (DEG$\geq$3) là:
+
+        \begin{equation*}
+            \begin{aligned}
+                g(\lambda \vert X_1 =x_1, X_2=x_2, \dots, X_n=x_n) &= \text{gamma}\big(\lambda; 46, 76 \big) \\
+                &\approx\mathcal{N}\Big(\dfrac{76}{46};\dfrac{76}{46^2})
+            \end{aligned}
+        \end{equation*}
+
+        Phân phối hậu nghiệm của tỷ lệ sinh của nhóm có trình độ văn hóa còn lại (DEG$<$3) là:
+
+        \begin{equation*}
+            \begin{aligned}
+                g(\lambda \vert X_1 =x_1, X_2=x_2, \dots, X_n=x_n) &= \text{gamma}\big(\lambda; 113, 227 \big) \\
+                &\approx\mathcal{N}\Big(\dfrac{227}{113};\dfrac{227}{113^2})
+            \end{aligned}
+        \end{equation*}
+
+        Ta vẽ phân phối hậu nghiệm của tỷ lệ sinh của hai nhóm phụ nữ khi phân phối tiên nghiệm
+        là phân phối đều bằng đoạn code:
+
+        \begin{python}
+x = np.linspace(0.5, 3, 1000)
+
+normal_approx_deg_geq_3 = normal_pdf_vector(x, (child_total_deg_geq_3 + alpha)/(n_deg_geq_3 + r), np.sqrt((child_total_deg_geq_3 + alpha)/((n_deg_geq_3 + r)**2)))
+normal_approx_deg_less_3 = normal_pdf_vector(x, (child_total_deg_less_3 + alpha)/(n_deg_less_3 + r), np.sqrt((child_total_deg_less_3 + alpha)/((n_deg_less_3 + r)**2)))
+            
+plt.plot(x, normal_approx_deg_geq_3, label="posterior of deg $\geq$ 3, prior gamma", linestyle="solid")
+plt.plot(x, normal_approx_deg_less_3, label="posterior of deg < 3, prior gamma", linestyle="solid")
+plt.legend()
+plt.grid()
+plt.show()
+        \end{python}
+
+        \begin{figure}[h!]
+            \centering
+            \includegraphics[width=0.6\linewidth]{figures/posterior_prior_gamma.png}
+            \caption{So sánh phân phối hậu nghiệm tỷ lệ sinh của 2 nhóm phụ nữ khi phân phối tiên nghiệm của tỷ lệ sinh đều là phân phối gamma $g(\lambda)=\text{gamma}(\lambda; 2, 10)$}
+            \label{fig:posterior_prior_gamma}
+        \end{figure}
+        
+
+        Từ hình \ref{fig:posterior_prior_gamma}, ta nhận thấy tỷ lệ sinh trung bình của nhóm phụ nữ có trình độ văn hóa trên phổ thông có xu hướng nhỏ hơn tỷ lệ sinh trung bình của phụ nữ có trình độ văn hóa còn lại.
+        Ta gọi kỳ vọng của phân phối hậu nghiệm của tỷ lệ sinh của nhóm có trình độ văn hóa trên phổ thông (DEG$\geq$3) là $\mu_1$ và kỳ vọng của phân phối hậu nghiệm của tỷ lệ sinh của nhóm có trình độ văn hóa còn lại là $\mu_2$.
+        Ta xét bài toán kiểm định:
+    
+        \begin{equation*}
+            \begin{cases}
+                H_0: \mu_1 = \mu_2 \\
+                H_1: \mu_1 < \mu_2
+            \end{cases}
+        \end{equation*}
+    
+        Do quan sát của hai nhóm phụ nữ đều lớn trên 30 (44 và 111), ta dùng tiêu chuẩn:
+    
+        \begin{equation*}
+            T = \dfrac{\bar{\lambda}_1 - \bar{\lambda}_2}{\sqrt{s_1^2 + s_2^2}}
+        \end{equation*}
+    
+        với $\bar{\lambda}_1=\dfrac{76}{46}, \bar{\lambda}_2=\dfrac{227}{113}$, $s_1^2=\dfrac{76}{46^2}, s_2^2=\dfrac{227}{113^2}$
+    
+        Ta có miền bác bỏ giả thiết $H_0$:
+    
+        \begin{equation*}
+            B_{\beta}= \lbrace T: T < z_{\beta} \rbrace
+        \end{equation*}
+        với $\beta$ là mức ý nghĩa. Ta chọn mức ý nghĩa $\beta=0.05$, vậy $z_{0.05}\approx-1.6449$
+    
+        Ta tính $T=\dfrac{\dfrac{76}{46} - \dfrac{227}{113}}{\sqrt{\dfrac{76}{46^2} + \dfrac{227}{113^2}}}\approx-1.5393 \notin B_{0.05}$
+
+        Như vậy ta chưa có cơ sở bác bỏ $H_0$, ta chấp nhận giả thiết $H_0$, ta có thể xem tỷ lệ sinh của hai nhóm phụ nữ là như nhau.
+    \end{itemize}
+
     
     \end{enumerate}
 \end{loigiai}
