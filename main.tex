@@ -671,7 +671,8 @@ plt.show()
 
         Ta ước lượng khoảng tin cậy cho tỷ lệ sinh của hai nhóm phụ nữ:
 
-        Ta sử dụng phương pháp Credible Interval, hay ta sẽ tìm một khoảng $\mathcal{C}$ sao cho:
+        \begin{itemize}
+            \item Ta sử dụng phương pháp Credible Interval, hay ta sẽ tìm một khoảng $\mathcal{C}$ sao cho:
 
         \begin{equation*}
             \int_{\mathcal{C}} g(\lambda \vert X_1 =x_1, X_2=x_2, \dots, X_n=x_n) d\lambda = 1 - \beta \text{ với } (0 < \beta < 1)
@@ -724,7 +725,7 @@ r
                 Ta thu được $l\approx 1.3017, r\approx2.0438$.
                 Vậy khoảng tin cậy cho tỷ lệ sinh với độ tin cậy 0.95 là $(1.3017;2.0438)$.
             \end{itemize}
-            \item Nhóm có trình độ văn hóa trên phổ thông (DEG$<$3):
+            \item Nhóm có trình độ văn hóa còn lại (DEG$<$3):
             Từ tập dữ liệu, ta có các số liệu $n=111, \sum_{i=1}^n x_i=217$.
             \begin{itemize}
                 \item Trường hợp phân phối tiên nghiệm của tỷ lệ sinh là phân phối đều thì phân phối hậu nghiệm của tỷ lệ sinh:
@@ -763,8 +764,108 @@ r
         \end{itemize}
 
 
-        Ta sử dụng phương pháp ước lượng khoảng tin cậy cho trung bình của phân phối chuẩn.
+        \item Ta sử dụng phương pháp ước lượng khoảng tin cậy cho trung bình của phân phối chuẩn.
+        
         Do khi $n$ và $\sum_{i=1}^n x_i$ đủ lớn, phân phối hậu nghiệm cho tỷ lệ sinh là phân phối gamma đã được chứng minh xấp xỉ phân phối chuẩn.
+
+        \begin{itemize}
+            \item Nhóm có trình độ văn hóa trên phổ thông (DEG$\geq$3):
+            Từ tập dữ liệu, ta có các số liệu $n=44, \sum_{i=1}^n x_i=66$.
+
+            \begin{itemize}
+                \item Trường hợp phân phối tiên nghiệm của tỷ lệ sinh là phân phối đều thì phân phối hậu nghiệm của tỷ lệ sinh:
+                \begin{equation*}
+                    \begin{aligned}
+                        g(\lambda \vert X_1 =x_1, X_2=x_2, \dots, X_n=x_n) &\propto \text{gamma}\big(\lambda; n, (\sum_{i=1}^n x_i) + 1\big) \\
+                        &= \text{gamma}\big(\lambda; 44, 67\big) \\
+                        &\approx \mathcal{N} \Big(\dfrac{67}{44}; \dfrac{67}{44^2} \Big)
+                    \end{aligned}
+                \end{equation*}
+                
+                Vậy khoảng tin cậy đối xứng với độ tin cậy 0.95 của tỷ lệ sinh là:
+
+                \begin{equation*}
+                    E \lbrack \lambda \rbrack \in \Big( \dfrac{67}{44} - z_{1-\frac{\beta}{2}} \dfrac{\sqrt{67}}{44};\dfrac{67}{44} + z_{1-\frac{\beta}{2}} \dfrac{\sqrt{67}}{44} \Big) 
+                \end{equation*}
+                
+                với $z_{1-\frac{\beta}{2}}=z_{1-0.025}=z_{0.975}\approx1.9599$
+                Thay số ta được:
+                \begin{equation*}
+                    E \lbrack \lambda \rbrack \in \Big( 1.1581; 1.8873 \Big)
+                \end{equation*}
+                \item Trường hợp phân phối tiên nghiệm của tỷ lệ sinh là phân phối gamma $g(\lambda) = \text{gamma}(\lambda; r, \alpha)=\text{gamma}(\lambda; 2, 10)$ thì phân phối hậu nghiệm của tỷ lệ sinh là:
+                \begin{equation*}
+                    \begin{aligned}
+                        g(\lambda \vert X_1 =x_1, X_2=x_2, \dots, X_n=x_n) &= \text{gamma}\big(\lambda; 46, 76 \big) \\
+                        &\approx\mathcal{N}\Big(\dfrac{76}{46};\dfrac{76}{46^2})
+                    \end{aligned}
+                \end{equation*}
+                Vậy khoảng tin cậy đối xứng với độ tin cậy 0.95 của tỷ lệ sinh là:
+
+                \begin{equation*}
+                    E \lbrack \lambda \rbrack \in \Big( \dfrac{76}{46} - z_{1-\frac{\beta}{2}} \dfrac{\sqrt{76}}{46};\dfrac{76}{46} + z_{1-\frac{\beta}{2}} \dfrac{\sqrt{76}}{46} \Big) 
+                \end{equation*}
+                
+                với $z_{1-\frac{\beta}{2}}=z_{1-0.025}=z_{0.975}\approx1.9599$
+                Thay số ta được:
+                \begin{equation*}
+                    E \lbrack \lambda \rbrack \in \Big( 1.2807; 2.0236 \Big)
+                \end{equation*}
+
+                
+                
+            \end{itemize}
+
+            \item Nhóm có trình độ văn hóa còn lại (DEG$<$3):
+            Từ tập dữ liệu, ta có các số liệu $n=111, \sum_{i=1}^n x_i=217$.
+                \begin{itemize}
+                    \item Trường hợp phân phối tiên nghiệm của tỷ lệ sinh là phân phối đều thì phân phối hậu nghiệm của tỷ lệ sinh:
+                    \begin{equation*}
+                        \begin{aligned}
+                            g(\lambda \vert X_1 =x_1, X_2=x_2, \dots, X_n=x_n) &\propto \text{gamma}\big(\lambda; n, (\sum_{i=1}^n x_i) + 1\big) \\
+                            &= \text{gamma}\big(\lambda; 111, 218\big) \\
+                            &\approx \mathcal{N} \Big( \dfrac{218}{111}; \dfrac{218}{111^2} \Big)
+                        \end{aligned}
+                    \end{equation*}
+                    Vậy khoảng tin cậy đối xứng với độ tin cậy 0.95 của tỷ lệ sinh là:
+
+                \begin{equation*}
+                    E \lbrack \lambda \rbrack \in \Big( \dfrac{218}{111} - z_{1-\frac{\beta}{2}} \dfrac{\sqrt{218}}{111};\dfrac{218}{111} + z_{1-\frac{\beta}{2}} \dfrac{\sqrt{218}}{111} \Big) 
+                \end{equation*}
+                
+                với $z_{1-\frac{\beta}{2}}=z_{1-0.025}=z_{0.975}\approx1.9599$
+                Thay số ta được:
+                \begin{equation*}
+                    E \lbrack \lambda \rbrack \in \Big( 1.7033; 2.2247 \Big)
+                \end{equation*}
+                \item Trường hợp phân phối tiên nghiệm của tỷ lệ sinh là phân phối gamma $g(\lambda) = \text{gamma}(\lambda; r, \alpha)=\text{gamma}(\lambda; 2, 10)$ thì phân phối hậu nghiệm của tỷ lệ sinh là:
+                \begin{equation*}
+                    \begin{aligned}
+                        g(\lambda \vert X_1 =x_1, X_2=x_2, \dots, X_n=x_n) &= \text{gamma}\big(\lambda; 113, 227 \big) \\
+                        &\approx\mathcal{N}\Big(\dfrac{227}{113};\dfrac{227}{113^2})
+                    \end{aligned}
+                \end{equation*}
+
+                Vậy khoảng tin cậy đối xứng với độ tin cậy 0.95 của tỷ lệ sinh là:
+
+                \begin{equation*}
+                    E \lbrack \lambda \rbrack \in \Big( \dfrac{227}{113} - z_{1-\frac{\beta}{2}} \dfrac{\sqrt{227}}{113};\dfrac{227}{113} + z_{1-\frac{\beta}{2}} \dfrac{\sqrt{227}}{113} \Big) 
+                \end{equation*}
+                
+                với $z_{1-\frac{\beta}{2}}=z_{1-0.025}=z_{0.975}\approx1.9599$
+                Thay số ta được:
+                \begin{equation*}
+                    E \lbrack \lambda \rbrack \in \Big( 1.7475; 2.2701 \Big)
+                \end{equation*}
+                \end{itemize}
+        \end{itemize}
+    \end{itemize}
+
+    \textbf{Nhận xét}: Ta nhận thấy hai cách ước lượng khoảng tin cậy bằng Credible Interval và ước lượng khoảng tin cậy bằng xấp xỉ chuẩn cho phân phối gamma cho kết quả rất gần nhau.
+        
+    \item So sánh tỷ lệ sinh của 2 nhóm và đánh giá sự khác biệt (nếu có)
+    
+    
     \end{enumerate}
 \end{loigiai}
 
