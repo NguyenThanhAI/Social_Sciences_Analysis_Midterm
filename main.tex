@@ -214,7 +214,7 @@
             f(X=k \vert \lambda) = e^{-\lambda} \dfrac{\lambda^k}{k!}
         \end{equation*}
 
-        Ta giả định các quan sát (những người phụ nữ) là độc lập:
+        Ta giả định các quan sát (số con được sinh từ một người phụ nữ) là độc lập:
 
         \begin{equation*}
             f(X_1=x_1,X_2=x_2,\dots, X_n=x_n \vert \lambda) = \prod_{i=1}^n f(X_i = x_i \vert \lambda)
@@ -418,7 +418,7 @@
             \end{aligned}
         \end{equation*}
 
-        Ta sử dụng khai triển Maclaurin:
+        Ta sử dụng khai triển Maclaurin phần dư dạng Peano:
         \begin{equation*}
             \dfrac{1}{1-a} = 1 + a + a^2 + a^3 + \dots + a^n + o(a^n), \text{ miền hội tụ } \lvert a \rvert < 1
         \end{equation*}
@@ -865,7 +865,8 @@ r
         
     \item So sánh tỷ lệ sinh của 2 nhóm và đánh giá sự khác biệt (nếu có)
     
-    Ta sẽ giả định hai nhóm phụ nữ có tỷ lệ sinh cùng phân phối tiên nghiệm (cùng là phân phối đều hoặc cùng phân phối gamma (cùng các tham số $r$ và $\alpha$))
+    Ta sẽ giả định hai nhóm phụ nữ có tỷ lệ sinh cùng phân phối tiên nghiệm (cùng là phân phối đều hoặc cùng phân phối gamma (cùng các tham số $r$ và $\alpha$)).
+    Ta gọi nhóm có trình độ văn hóa trên phổ thông (DEG$\geq$3) là nhóm 1 và nhóm có trình độ văn hóa còn lại (DEG$<$3) là nhóm 2
 
     Do phân phối hậu nghiệm của tỷ lệ sinh đều có dạng xấp xỉ chuẩn nên để so sánh tỷ lệ sinh của 2 nhóm phụ nữ, ta sẽ so sánh kỳ vọng của hai phân phối hậu nghiệm.
     
@@ -1000,7 +1001,7 @@ plt.show()
             \end{cases}
         \end{equation*}
     
-        Do quan sát của hai nhóm phụ nữ đều lớn trên 30 (44 và 111), ta dùng tiêu chuẩn:
+        Do số quan sát của hai nhóm phụ nữ đều lớn trên 30 (44 và 111), ta dùng tiêu chuẩn:
     
         \begin{equation*}
             T = \dfrac{\bar{\lambda}_1 - \bar{\lambda}_2}{\sqrt{s_1^2 + s_2^2}}
@@ -1018,8 +1019,70 @@ plt.show()
         Ta tính $T=\dfrac{\dfrac{76}{46} - \dfrac{227}{113}}{\sqrt{\dfrac{76}{46^2} + \dfrac{227}{113^2}}}\approx-1.5393 \notin B_{0.05}$
 
         Như vậy ta chưa có cơ sở bác bỏ $H_0$, ta chấp nhận giả thiết $H_0$, ta có thể xem tỷ lệ sinh của hai nhóm phụ nữ là như nhau.
+
+        Ta nhận thấy khi phân phối tiên nghiệm của tỷ lệ sinh là phân phối gamma, thì sự khác biệt tỷ lệ sinh giữa hai nhóm phụ thuộc vào rất nhiều $r$ và $\alpha$.
+        Trong trường hợp này $\alpha=10$ lớn hơn khá nhiều so với $r=2$ làm cho tỷ lệ sinh trung bình của nhóm 1 tăng nhiều hơn tương đối so với nhóm 2 vì vậy làm giảm giá trị của tiêu chuẩn kiểm định.
+        Nếu như giá trị $r$ và $\alpha$ nhỏ hơn chỉ khoảng từ 1 đến 3 thì sự khác biệt về tỷ lệ sinh trung bình của hai nhóm không thay đổi nhiều so với trường hợp phân phối tiên nghiệm của tỷ lệ sinh là phân phối đều.
+
+        \item Ta sẽ so sánh tỷ lệ sinh của 2 nhóm phụ nữ theo kiểm định từ dữ liệu hai nhóm phụ nữ
+        
+        Ta sẽ xét bài toán kiểm định từ việc tính tiêu chuẩn kiêm định trực tiếp từ mẫu:
+
+        Do số quan sát mỗi nhóm phụ nữ đều lớn hơn 30 (44 và 111), mỗi biến $X_1, X_2, \dots, X_n$ độc lập và cùng tuân theo phân phối Poisson,
+        theo luật số lớn $\bar{X} = \dfrac{X_1 + X_2 + \dots + X_n}{n}$ sẽ xấp xỉ phân phối chuẩn
+
+        Ta xét bài toán kiểm định:
+
+        \begin{equation*}
+            \begin{cases}
+                H_0: \mu_1 = \mu_2 \\
+                H_1: \mu_1 < \mu_2
+            \end{cases}
+        \end{equation*}
+
+        Do số quan sát của hai nhóm phụ nữ đều lớn trên 30 (44 và 111), ta dùng tiêu chuẩn:
+
+        \begin{equation*}
+            T = \dfrac{\bar{x} - \bar{y}}{\sqrt{\dfrac{s_1^2}{n_1} + \dfrac{s_2^2}{n_2}}}
+        \end{equation*}
+
+        với $\bar{x}$ là trung bình mẫu của nhóm 1, $\bar{y}$ là trung bình mẫu của nhóm 2,
+        $s_1$ là phương sai mẫu của nhóm 1 và $s_2$ là phương sai mẫu của nhóm 2.
+
+        Miền bác bỏ giả thiết $H_0$ là:
+
+        \begin{equation*}
+            B_{\beta}= \lbrace T: T < z_{\beta} \rbrace
+        \end{equation*}
+        với $\beta$ là mức ý nghĩa. Ta chọn mức ý nghĩa $\beta=0.05$, vậy $z_{0.05}\approx-1.6449$
+
+        Ta tính $T$ bằng đoạn code sau:
+
+        \begin{python}
+observes_group_1 = df_deg_geq_3.CHILDS.to_numpy()
+observes_group_2 = df_deg_less_3.CHILDS.to_numpy()
+
+x_bar = np.mean(observes_group_1)
+y_bar = np.mean(observes_group_2)
+
+s_1 = np.sqrt(np.sum((observes_group_1 - x_bar)**2)/(observes_group_1.shape[0] - 1))
+s_2 = np.sqrt(np.sum((observes_group_2 - y_bar)**2)/(observes_group_2.shape[0] - 1))
+
+t = (x_bar - y_bar)/np.sqrt(s_1**2/n_deg_geq_3 + s_2**2/n_deg_less_3)
+        \end{python}
+
+        Ta tính được:
+
+        \begin{equation*}
+            T = \dfrac{\bar{x} - \bar{y}}{\sqrt{\dfrac{s_1^2}{n_1} + \dfrac{s_2^2}{n_2}}}=\dfrac{1.5 - 1.9550}{\sqrt{\dfrac{1.3721}{44} + \dfrac{1.8980}{111}}}\approx -2.0705 \in B_{0.05}
+        \end{equation*}
+
+        Ta nhận thấy $T$ đã thuộc vào miền bác $H_0$, vậy nên ta bác bỏ $H_0$, chấp nhận $H_1$.
     \end{itemize}
 
+    \textbf{Nhận xét:} Ta nhận thấy giá trị của tiêu chuẩn kiểm định trong trường hợp xét phân phối hậu nghiệm tỷ lệ sinh khi phân phối tiên nghiệm tỷ lệ sinh là phân phối đều và trong trường hợp tính kiểm định thống kê từ mẫu, các kết quả kiểm định trong các trường hợp này khá gần nhau.
+    Điều này cho ta thấy, tính kiểm định thống kê thông thường từ các mẫu xem khả năng xảy ra của các tỷ lệ sinh ban đầu là như nhau (phân phối đều).
+    Nhưng trong trường hợp phân phối tiên nghiệm là phân phối gamma thì phân phối hậu nghiệm hay sự khác biệt giữa tỷ lệ sinh của hai nhóm phụ nữ phụ thuộc rất nhiều vào hai tham số $r$ và $\alpha$ của phân phối tiên nghiệm.
     
     \end{enumerate}
 \end{loigiai}
