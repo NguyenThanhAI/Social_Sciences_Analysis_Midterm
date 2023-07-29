@@ -249,7 +249,7 @@
 
             \begin{equation*}
                 g(\lambda) = \begin{cases}
-                    \dfrac{1}{a} \text{ nếu } \lambda \in \lbrack 0; a\rbrack (a > 0) \\
+                    \dfrac{1}{a} \text{ nếu } \lambda \in \lbrack 0; a\rbrack (a > 0, a < \infty) \\
                     0 \text{ nếu ngược lại}
                 \end{cases}
             \end{equation*}
@@ -261,9 +261,20 @@
                     g(\lambda \vert X_1 =x_1, X_2=x_2, \dots, X_n=x_n) &= \dfrac{g(\lambda) f(X_1=x_1,X_2=x_2,\dots, X_n=x_n \vert \lambda)}{\int g(\lambda) f(X_1=x_1,X_2=x_2,\dots, X_n=x_n \vert \lambda) d \lambda} \\
                     &= \dfrac{\dfrac{1}{a} e^{-n\lambda} \dfrac{\lambda^{\sum_{i=1}^n x_i}}{\prod_{i=1}^n x_i!}}{\displaystyle\int_{0}^{a} \dfrac{1}{a} e^{-n\lambda} \dfrac{\lambda^{\sum_{i=1}^n x_i}}{\prod_{i=1}^n x_i!} d \lambda} \\
                     &= \dfrac{\dfrac{1}{a} e^{-n \lambda} \dfrac{(n\lambda)^{\sum_{i=1}^n x_i}}{\big(n^{\sum_{i=1}^n x_i}\big)\prod_{i=1}^n x_i!}}{\displaystyle\int_{0}^{a} \dfrac{1}{a} e^{-n\lambda} \dfrac{\lambda^{\sum_{i=1}^n x_i}}{\prod_{i=1}^n x_i!} d \lambda} \\
-                    &= \dfrac{\dfrac{1}{a n^{(\sum_{i=1}^n x_i) + 1}\prod_{i=1}^n x_i !}  ne^{-n\lambda} (n\lambda)^{\sum_{i=1}^n x_i}}{\dfrac{1}{a \prod_{i=1}^n x_i!} \displaystyle \int_{0}^a e^{-n\lambda}\lambda^{\sum_{i=1}^n x_i}d\lambda} \\
+                    &= \dfrac{\dfrac{1}{a. n^{(\sum_{i=1}^n x_i) + 1}\prod_{i=1}^n x_i !}  ne^{-n\lambda} (n\lambda)^{\sum_{i=1}^n x_i}}{\dfrac{1}{a \prod_{i=1}^n x_i!} \displaystyle \int_{0}^a e^{-n\lambda}\lambda^{\sum_{i=1}^n x_i}d\lambda} \\
                     &= \dfrac{n e^{-n\lambda}(n\lambda)^{\sum_{i=1}^n x_i}}{n^{(\sum_{i=1}^n x_i) + 1}\displaystyle\int_{0}^a e^{-n\lambda} \lambda^{\sum_{i=1}^n x_i}d\lambda}
                 \end{aligned}
+            \end{equation*}
+
+            Khi $a$ là hữu hạn, phân phối hậu nghiệm của tỷ lệ sinh sẽ không phụ thuộc vào $a$.
+            Tổng quát, phân phối tiên nghiệm có thể có dạng:
+
+
+            \begin{equation*}
+                g(\lambda) = \begin{cases}
+                    \dfrac{1}{d - c} \text{ nếu } \lambda \in \lbrack c; d\rbrack (d-c \text{ hữu hạn}) \\
+                    0 \text{ nếu ngược lại}
+                \end{cases}
             \end{equation*}
 
             Ta nhận thấy các đại lượng $a$ (theo giả thiết về phân phối tiên nghiệm), $n^{\sum_{i=1}^n x_i}$  (tập dữ liệu ta đã biết), $\displaystyle\int_{0}^a e^{-n\lambda} \lambda^{\sum_{i=1}^n x_i}d\lambda$ đều là hằng số.
@@ -329,6 +340,8 @@
 
             Như vậy ta nhận thấy phân phối hậu nghiệm $g(\lambda \vert X_1 =x_1, X_2=x_2, \dots, X_n=x_n)$ của $\lambda$ cũng chính là phân phối gamma khi phân phối tiên nghiệm của $\lambda$ là phân phối gamma.
         \end{enumerate}
+
+        Để kiểm chứng các phân phối hậu nghiệm tìm được từ lý thuyết, ta sẽ sử dụng thực nghiệm để kiểm chứng các phân phối hậu nghiệm vừa tìm được
         \item Đặc điểm của các phân phối hậu nghiệm tìm được là:
         
         Như ta đã chứng minh, khi phân phối tiên nghiệm là phân phối đều hoặc phân phối gamma thì phân phối hậu nghiệm đều có dạng phân phối gamma.
@@ -336,7 +349,7 @@
         Ta sẽ xét phân phối gamma $\text{gamma}(\lambda; r, \alpha)$ khi cả $r$ và $\alpha$ đều lớn.
         Ta sử dụng công cụ hàm sinh mômen.
         Cho một đại lượng ngẫu nhiên $Y$, khi đó nếu tồn tại $\mathbb{E}(e^{tY}), \forall \lvert t \rvert \leq k, k > 0$ bất kỳ.
-        Ta gọi $M(t) = \mathbb{E}(e^{tY})$ là hàm sinh moomen của $Y$:
+        Ta gọi $M(t) = \mathbb{E}(e^{tY})$ là hàm sinh mômen của $Y$:
 
         Ta xét trường hợp $Z \sim \mathcal{N}(0; 1)$:
 
