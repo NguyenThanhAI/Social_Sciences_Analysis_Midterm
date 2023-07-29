@@ -341,7 +341,106 @@
             Như vậy ta nhận thấy phân phối hậu nghiệm $g(\lambda \vert X_1 =x_1, X_2=x_2, \dots, X_n=x_n)$ của $\lambda$ cũng chính là phân phối gamma khi phân phối tiên nghiệm của $\lambda$ là phân phối gamma.
         \end{enumerate}
 
-        Để kiểm chứng các phân phối hậu nghiệm tìm được từ lý thuyết, ta sẽ sử dụng thực nghiệm để kiểm chứng các phân phối hậu nghiệm vừa tìm được
+        Để kiểm chứng các phân phối hậu nghiệm tìm được từ lý thuyết, ta sẽ sử dụng thực nghiệm để kiểm chứng các phân phối hậu nghiệm vừa tìm được.
+        Do số lượng các điểm để tính giá trị của hàm mật độ xác suất tại các điểm này là lớn và số quan sát trong từng nhóm phụ nữ cũng lớn nên ta rất khó tính bằng tay.
+        Vì vậy ta sẽ sử dụng chương trình
+        Ta sử dụng phương pháp lặp cho từng quan sát, ta lấy các điểm rời rạc, tính giá trị các điểm này theo hàm mật độ xác suất của phân phối tiên nghiệm đang xét.
+        Do tổng giá trị của các điểm rời rạc phân phối tiên nghiệm phải là 1 nên sau khi tính giá trị các điểm này theo hàm mật độ xác suất, ta cần có bước chuẩn hóa bằng cách gán lại giá trị tại mỗi điểm bằng thương của giá trị tại mỗi điểm chia cho tổng giá trị tại các điểm.
+        Cụ thể, ta chọn phân phối tiên nghiệm $g(\lambda)$.
+        Ta chọn $m$ điểm $e_1, e_2, \dots, e_m$ trên trục hoành, ta tính giá trị các điểm này trên phân phối tiên nghiệm $g(e_1), g(e_2), \dots, g(e_m)$.
+        Ta tính tiên nghiệm rời rạc bằng cách:
+
+        \begin{equation*}
+            \text{prior} = \Big \lbrack \dfrac{g(e_1)}{\sum_{i=1}^m g(e_i)}, \dfrac{g(e_2)}{\sum_{i=1}^m g(e_i)}, \dots, \dfrac{g(e_m)}{\sum_{i=1}^m g(e_i)} \Big \rbrack
+        \end{equation*}
+
+        Điều này đảm bảo tổng các điểm trên phân phối tiên nghiệm được rời rạc hóa là 1.
+        Các giá trị này chỉ tỷ lệ mà không bằng chính xác với giá trị thật của các điểm trên phân phối tiên nghiệm liên tục.
+
+        Để tính phân phối tiên nghiệm của tỷ lệ sinh sử dụng vòng lặp, mỗi vòng lặp ta tính hậu nghiệm cho từng quan sát, hậu nghiệm ở bước trước trở thành tiên nghiệm của vòng lặp sau (quan sát sau).
+        Ta sử dụng mã giả sau để tính hậu nghiệm của một tập các quan sát tương ứng với một phân phối tiên nghiệm.
+
+
+        \begin{algorithm}[h!]
+            \DontPrintSemicolon
+            \KwIn{Phân phối tiên nghiệm $g(\lambda)$, tập các quan sát $\lbrack x_1, x_2, \dots, x_n \rbrack$}
+            \KwOut{Phân phối hậu nghiệm}
+            Lấy một tập gồm m các điểm trên trục hoành $\lbrack e_1, e_2, \dots, e_m \rbrack$\;
+            Tính giá trị các điểm này trên phân phối tiên nghiệm $\lbrack g(e_1), g(e_2), \dots, g(e_m) \rbrack$\;
+            prior $\gets \Big \lbrack \dfrac{g(e_1)}{\sum_{k=1}^m g(e_i)}, \dfrac{g(e_2)}{\sum_{k=1}^m g(e_i)}, \dots, \dfrac{g(e_m)}{\sum_{k=1}^m g(e_i)} \Big \rbrack$\;
+            \For{$i \gets 1$ \KwSty{to} $n$}{
+                \For{$j \gets 1$ \KwSty{to} $m$} {
+                    $pos_j \gets g(e_j) \times \dfrac{e_j^{x_i}}{x_i!}$\;
+                }
+                posterior $\gets \Big \lbrack \dfrac{pos_1}{\sum_{k=1}^m pos_k}, \dfrac{pos_2}{\sum_{k=1}^m pos_k}, \dots, \dfrac{pos_m}{\sum_{k=1}^m pos_k} \Big \rbrack$\;
+                prior $\gets$ posterior\;
+            }
+            \Return{posterior}\;
+            \caption{Thủ tục tính phân phối hậu nghiệm tỷ lệ sinh sử dụng vòng lặp cho từng quan sát, hậu nghiệm ở bước trước trở thành tiên nghiệm của vòng lặp sau (quan sát sau).}
+        \end{algorithm}
+
+        Khi cài đặt chương trình, khi phân phối tiên nghiệm cho tỷ lệ sinh là phân phối gamma là $g(\lambda) = \text{gamma}(\lambda; r=2, \alpha=10)$, ta chọn $r=2, \alpha=10$.
+        Ta sử đoạn chương trình sau:
+
+        \begin{python}
+lamdas = np.linspace(0, 10, 1000)
+
+prior_uniform = np.ones_like(lamdas) / lamdas.shape[0]
+            
+r = 2
+alpha = 10
+            
+prior_gamma = gamma_pdf_vector(lamdas, r, alpha)
+prior_gamma = prior_gamma / np.sum(prior_gamma)
+        \end{python}
+
+        Đoạn code trên để chọn một tập các giá trị trên trục hoành, tính các giá trị tiên nghiệm trong trường hợp phân phối tiên nghiệm là phân phối đều và phân phối gamma.
+
+        \begin{python}
+plt.plot(lamdas, prior_gamma, label="gamma prior")
+plt.legend()
+plt.grid()
+plt.show()
+        \end{python}
+
+        Đoạn code trên vẽ phân phối tiên nghiệm của tỷ lệ sinh là phân phối $g(\lambda)=\text{gamma}(\lambda;r=2,\alpha=10)$.
+
+        \begin{figure}[h!]
+            \centering
+            \includegraphics[width=0.6\linewidth]{figures/gamma_prior.png}
+            \caption{Hình vẽ phân phối tiên nghiệm là phân phối gamma và đã được chuẩn hóa sao cho tổng giá trị các điểm là 1,
+            các giá trị này chỉ tỷ lệ với giá trị thật trên hàm mật độ xác suất của phân phối gamma (do phải chuẩn hóa các điểm rời rạc)}
+        \end{figure}
+
+        \begin{python}
+posterior_theory_uniform_deg_geq_3 = gamma_pdf_vector(lamdas, n_deg_geq_3, (child_total_deg_geq_3 + 1))
+posterior_theory_uniform_deg_geq_3 = posterior_theory_uniform_deg_geq_3/np.sum(posterior_theory_uniform_deg_geq_3)
+posterior_theory_gamma_deg_geq_3 = gamma_pdf_vector(lamdas, (n_deg_geq_3 + r), (child_total_deg_geq_3 + alpha))
+posterior_theory_gamma_deg_geq_3 = posterior_theory_gamma_deg_geq_3/np.sum(posterior_theory_gamma_deg_geq_3)
+        \end{python}
+
+        Ta tính giá trị lý thuyết của phân phối hậu nghiệm tại các điểm trong trường hợp phân phối tiên nghiệm là phân phối đều và phân phối gamma cho nhóm phụ nữ có trình độ văn hóa trên phổ thông (DEG $\geq$ 3)
+
+        \begin{python}
+def compute_posterior_loop(prior: np.ndarray, lamdas: np.ndarray, observes: np.ndarray):
+    poisson_vector = np.vectorize(poisson)
+    for obs in tqdm(observes):
+        numerator = prior * poisson_vector(x=obs, lamda=lamdas)
+        pos = numerator / np.sum(numerator)
+        prior = pos
+            
+    return pos
+        \end{python}
+
+        Hàm compute\_posterior\_loop thực hiện tính phân phối hậu nghiệm theo bước lặp các quan sát, ậu nghiệm của quan sát trước trở thành tiên nghiệm của quan sát sau
+
+        \begin{python}
+posterior_loop_uniform_deg_geq_3 = compute_posterior_loop(prior=prior_uniform, lamdas=lamdas, observes=df_deg_geq_3.CHILDS.to_numpy())
+posterior_loop_gamma_deg_geq_3 = compute_posterior_loop(prior=prior_gamma, lamdas=lamdas, observes=df_deg_geq_3.CHILDS.to_numpy())
+        \end{python}
+        Ta tính giá trị của phân phối hậu nghiệm tại các điểm bằng (cho từng quan sát, hậu nghiệm ở bước trước trở thành tiên nghiệm ở bước sau) vòng lặp trong trường hợp phân phối tiên nghiệm là phân phối đều và phân phối gamma cho nhóm phụ nữ có trình độ văn hóa trên phổ thông (DEG $\geq$ 3)
+
+
         \item Đặc điểm của các phân phối hậu nghiệm tìm được là:
         
         Như ta đã chứng minh, khi phân phối tiên nghiệm là phân phối đều hoặc phân phối gamma thì phân phối hậu nghiệm đều có dạng phân phối gamma.
