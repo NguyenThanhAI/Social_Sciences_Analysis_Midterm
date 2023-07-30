@@ -327,7 +327,7 @@
             f(X=k \vert \lambda) = e^{-\lambda} \dfrac{\lambda^k}{k!}
         \end{equation*}
 
-        Ta giả định các quan sát (số con được sinh từ một người phụ nữ) là độc lập:
+        Ta giả định các quan sát (số con được sinh từ một người phụ nữ) là độc lập (các biến $X_i, i=1,2,\dots,n$ là các biến ngẫu nhiên độc lập và cùng tuân theo phân phối Poisson):
 
         \begin{equation*}
             f(X_1=x_1,X_2=x_2,\dots, X_n=x_n \vert \lambda) = \prod_{i=1}^n f(X_i = x_i \vert \lambda)
@@ -1406,6 +1406,23 @@ t = (x_bar - y_bar)/np.sqrt(s_1**2/n_deg_geq_3 + s_2**2/n_deg_less_3)
     
     \end{enumerate}
 \end{loigiai}
+
+\newpage
+\begin{center}
+    \section*{KẾT LUẬN}
+\end{center}
+
+Sau khi phân tích số liệu về tỷ lệ sinh của phụ nữ Mỹ ở độ tuổi 40 trong thập niên 1990 (YEAR $\geq$ 1990 \& AGE==40 \& FEMALE==1).
+Có 02 nhóm phụ nữ được nghiên cứu là nhóm có trình độ văn hoá trên phổ thông (DEG $\geq$ 3) và nhóm còn lại, ta có một số kết luận sau:
+
+\begin{itemize}
+    \item Trong trường hợp phân phối tiên nghiệm của tỷ lệ sinh là đều hoặc phân phối gamma thì phân phối hậu nghiệm của tỷ lệ sinh cũng là gamma
+    \item Khi số quan sát lớn và tổng số lượng trẻ em được sinh ra tương đối lớn thì phân phối hậu nghiệm của tỷ lệ sinh xấp xỉ chuẩn
+    \item Trong trường hợp phân phối tiên nghiệm của tỷ lệ sinh là phân phối đều thì tỷ lệ sinh trung bình của nhóm phụ nữ có trình độ văn hóa trên phổ thông (DEG $\geq$ 3) nhỏ hơn tỷ lệ sinh trung bình của nhóm phụ nữ có trình độ văn hóa còn lại (DEG $<$ 3).
+    \item Trong trường hợp phân phối tiên nghiệm của tỷ lệ sinh là phân phối $\text{gamma}(\lambda; r, \alpha)$ thì sự khác biệt giữa tỷ lệ sinh trung bình của hai nhóm phụ nữ phụ thuộc nhiều vào $r$ và $\alpha$.
+    Trong trường hợp $r$ và $\alpha$ tương đối nhỏ (chỉ khoảng từ 1 đến 3) thì sự khác biệt về tỷ lệ sinh trung bình của hai nhóm không thay đổi nhiều so với trường hợp phân phối tiên nghiệm của tỷ lệ sinh là phân phối đều làm cho giá trị tiêu chuẩn kiểm định không khác nhiều giá trị tiêu chuẩn kiểm định trong trường hợp phân phối tiên nghiệm của tỷ lệ sinh là phân phối đều.
+    
+\end{itemize}
 
 \newpage
 \printbibliography[title={TÀI LIỆU THAM KHẢO}]
