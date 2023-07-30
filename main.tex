@@ -204,7 +204,9 @@
 
 \begin{loigiai}
 
-    Ta sẽ phân tích tập dữ liệu:
+    \textbf{1. Phân tích tập dữ liệu:}
+
+    Ta xét tập dữ liệu:
 
     \begin{figure}[H]
         \centering
@@ -315,6 +317,8 @@
         \item Đa số trẻ em được sinh ra từ những phụ nữ có trạng thái MARITAL là 1.
     \end{itemize}
 
+    \textbf{2. Phần trả lời các câu hỏi ở trong bài tập ước lượng tham số Bayes cho tham số của phân phối Poisson:}
+
     \begin{enumerate}
         \item Xác định phân phối của dữ liệu (likelihood):
         
@@ -327,7 +331,7 @@
             f(X=k \vert \lambda) = e^{-\lambda} \dfrac{\lambda^k}{k!}
         \end{equation*}
 
-        Ta giả định các quan sát (số con được sinh từ một người phụ nữ) là độc lập (các biến $X_i, i=1,2,\dots,n$ là các biến ngẫu nhiên độc lập và cùng tuân theo phân phối Poisson):
+        Ta giả định số con được sinh từ một người phụ nữ là độc lập (các biến $X_i, i=1,2,\dots,n$ là các biến ngẫu nhiên độc lập và cùng tuân theo phân phối Poisson), và $x_i, i=1, 2, \dots, n$ là các giá trị quan sát tương ứng với $X_i, i=1, 2, \dots, n$:
 
         \begin{equation*}
             f(X_1=x_1,X_2=x_2,\dots, X_n=x_n \vert \lambda) = \prod_{i=1}^n f(X_i = x_i \vert \lambda)
@@ -816,8 +820,10 @@ plt.show()
             ta gọi ước lượng này là $\hat{\lambda}_1$:
 
             \begin{equation*}
-                \hat{\lambda}_1 = \dfrac{(\sum_{i=1}^n x_i) + 1}{n}
+                \hat{\lambda}_1 = \dfrac{(\sum_{i=1}^n X_i) + 1}{n}
             \end{equation*}
+
+            Ta chú ý các biến $X_i, i=1,2,\dots,n$ là các biến ngẫu nhiên (vẫn chưa nhận giá trị quan sát) độc lập và cùng tuân theo phân phối Poisson.
 
             Ta tính bias của $\hat{\lambda}_1$:
 
@@ -830,7 +836,7 @@ plt.show()
             Ta tính phương sai của $\hat{\lambda}_1$:
             
             \begin{equation*}
-                \text{Var}(\hat{\lambda}_1) = \dfrac{\lambda}{n}
+                \text{Var}(\hat{\lambda}_1) = \dfrac{\sum_{i=1}^n \text{Var}(X_i) + \text{Var}(1)}{n^2} = \dfrac{n\lambda}{n^2} = \dfrac{\lambda}{n}
             \end{equation*}
 
             Như vậy sai số trung bình của ước lượng $\hat{\lambda}_1$:
@@ -843,7 +849,7 @@ plt.show()
             ta gọi ước lượng này là $\hat{\lambda}_2$:
 
             \begin{equation*}
-                \hat{\lambda}_2 = \dfrac{(\sum_{i=1}^n x_i) + 1 - 1}{n} = \dfrac{\sum_{i=1}^n x_i}{n}
+                \hat{\lambda}_2 = \dfrac{(\sum_{i=1}^n X_i) + 1 - 1}{n} = \dfrac{\sum_{i=1}^n X_i}{n}
             \end{equation*}
 
             Ta tính bias của $\hat{\lambda}_2$:
@@ -857,7 +863,7 @@ plt.show()
             Ta tính phương sai của $\hat{\lambda}_2$:
 
             \begin{equation*}
-                \text{Var}(\hat{\lambda}_2) = \dfrac{\lambda}{n}
+                \text{Var}(\hat{\lambda}_2) = \dfrac{\sum_{i=1}^n \text{Var}(X_i)}{n^2} = \dfrac{n\lambda}{n^2} = \dfrac{\lambda}{n}
             \end{equation*}
 
             Như vậy sai số trung bình của ước lượng $\hat{\lambda}_2$:
@@ -892,7 +898,7 @@ plt.show()
             ta gọi ước lượng này là $\hat{\lambda}_3$:
 
             \begin{equation*}
-                \hat{\lambda}_3 = \dfrac{(\sum_{i=1}^n x_i) + \alpha}{n + r}
+                \hat{\lambda}_3 = \dfrac{(\sum_{i=1}^n X_i) + \alpha}{n + r}
             \end{equation*}
 
             Ta tính bias của $\hat{\lambda}_3$:
@@ -906,7 +912,7 @@ plt.show()
             Ta tính phương sai của $\hat{\lambda}_3$:
             
             \begin{equation*}
-                \text{Var}(\hat{\lambda}_3) = \dfrac{n\lambda}{(n+r)^2} \text{ (do } \alpha \text{ là hằng số)}
+                \text{Var}(\hat{\lambda}_3) = \dfrac{\sum_{i=1}^n \text{Var}(X_i) + \text{Var}(\alpha)}{(n+r)^2} = \dfrac{n\lambda}{(n+r)^2} \text{ (do } \alpha \text{ là hằng số)}
             \end{equation*}
 
             Như vậy sai số trung bình của ước lượng $\hat{\lambda}_3$:
@@ -919,7 +925,7 @@ plt.show()
             ta gọi ước lượng này là $\hat{\lambda}_4$:
 
             \begin{equation*}
-                \hat{\lambda}_4 = \dfrac{(\sum_{i=1}^n x_i) + \alpha - 1}{n + r}
+                \hat{\lambda}_4 = \dfrac{(\sum_{i=1}^n X_i) + \alpha - 1}{n + r}
             \end{equation*}
 
             Ta tính bias của $\hat{\lambda}_4$:
@@ -933,7 +939,7 @@ plt.show()
             Ta tính phương sai của $\hat{\lambda}_4$:
 
             \begin{equation*}
-                \text{Var}(\hat{\lambda}_4) = \dfrac{n\lambda}{(n+r)^2} \text{ (do } \alpha - 1 \text{ là hằng số)}
+                \text{Var}(\hat{\lambda}_4) = \dfrac{\sum_{i=1}^n \text{Var}(X_i) + \text{Var}(\alpha-1)}{(n+r)^2} = \dfrac{n\lambda}{(n+r)^2} \text{ (do } \alpha - 1 \text{ là hằng số)}
             \end{equation*}
 
             Sai số trung bình của ước lượng $\hat{\lambda}_4$:
@@ -942,7 +948,7 @@ plt.show()
                 \text{MS}(\hat{\lambda}_4) = \text{Var}(\hat{\lambda}_4) + (\text{bias}(\hat{\lambda}_4))^2 = \dfrac{n\lambda}{(n+r)^2} + \Big( \dfrac{\alpha - 1 - r\lambda}{n + r} \Big)^2 < \text{MS}(\hat{\lambda}_3)
             \end{equation*}
 
-            Ta nhận thấy cả hai cách ước lượng sử dụng trung bình hoặc mode của phân phối hậu nghiệm của tỷ lệ sinh là ước lượng không chệch và sai số trung bình của ước lượng $\hat{\lambda}_4$ nhỏ hơn sai số trung bình của ước lượng $\hat{\lambda}_3$
+            Ta nhận thấy cả hai cách ước lượng sử dụng trung bình hoặc mode của phân phối hậu nghiệm của tỷ lệ sinh là ước lượng không chệch và sai số trung bình của ước lượng $\hat{\lambda}_4$ nhỏ hơn sai số trung bình của ước lượng $\hat{\lambda}_3$.
             Nhưng khi $n$ (số quan sát) lớn, $r$ và $\alpha$ tương đối lớn thì chênh lệch sai số trung bình của hai cách ước lượng trên là không nhiều.
             Nhưng trong trường hợp này ta vẫn sẽ chọn cách ước lượng theo mode của phân phối hậu nghiệm.
 
@@ -987,6 +993,7 @@ plt.show()
 
         \textbf{Ước lượng khoảng tin cậy:}
 
+        Ở trong phần ước lượng khoảng tin cậy cho tỷ lệ sinh của hai nhóm phụ nữ, để đơn giản ta sẽ sử dụng khoảng tin cậy đối xứng (thực tế khoảng tin cậy không nhất thiết là khoảng tin cậy đối xứng).
         Ta ước lượng khoảng tin cậy cho tỷ lệ sinh của hai nhóm phụ nữ:
 
         \begin{itemize}
