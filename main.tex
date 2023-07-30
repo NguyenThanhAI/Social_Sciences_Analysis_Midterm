@@ -21,6 +21,7 @@
 \usepackage{glossary-superragged}
 \usepackage{tikz,tkz-tab}
 \usepackage{pythonhighlight}
+\usepackage{float}
 \setglossarystyle{superraggedheaderborder}
 \pagestyle{fancy}
 %\usepackage[style=numeric,sortcites]{biblatex}
@@ -205,7 +206,7 @@
 
     Ta sẽ phân tích tập dữ liệu:
 
-    \begin{figure}[h!]
+    \begin{figure}[H]
         \centering
         \includegraphics[width=0.8\linewidth]{figures/overall_df.png}
         \caption{Dataframe của tập dữ liệu}
@@ -215,55 +216,104 @@
     Tập dữ liệu gồm 38116 hàng và 36 trường dữ liệu.
     Số trường dữ liệu khá lớn, ta sẽ chỉ quan tâm tới một số trường dữ liệu có ý nghĩa khá dễ hiểu.
 
-    \begin{figure}[h!]
+    \begin{figure}[H]
         \centering
-        \includegraphics[width=0.8\linewidth]{figures/overall_frequency.png}
+        \includegraphics[width=0.6\linewidth]{figures/overall_frequency.png}
         \caption{Biểu đồ tần suất các giá trị của các trường dữ liệu được tính trên toàn tập dữ liệu}
         \label{fig:overall_frequency}
     \end{figure}
 
-    \begin{figure}[h!]
+    Hình \ref{fig:overall_frequency} biểu diễn biểu đồ tần suất các giá trị của các trường dữ liệu.
+    Trường WRKSTAT giá trị số 1 có số lượng xuất hiện nhiều nhất.
+    Trường DEGREE giá trị số 1 có số lượng xuất hiện nhiều nhất.
+    Đa số những người có số con từ 0 đến 3 con.
+    Trường INCOME đa số mọi người đang ở trạng thái giá trị 12.
+
+    \begin{figure}[H]
         \centering
-        \includegraphics[width=0.8\linewidth]{figures/overall_avg_child_field.png}
-        \caption{Biểu đồ cột với trục hoành là giá trị của các trường và trục tung là phân phối số lượng trẻ em sinh trung bình của những người tham gia khảo sát có giá trị tương ứng trong trường được tính trên toàn tập dữ liệu}
+        \includegraphics[width=0.7\linewidth]{figures/overall_avg_child_field.png}
+        \caption{Biểu đồ cột với trục hoành là giá trị của các trường và trục tung là số lượng trẻ em sinh trung bình của những người tham gia khảo sát có giá trị tương ứng trong trường được tính trên toàn tập dữ liệu}
         \label{fig:overall_avg_child_field}
     \end{figure}
 
+    Hình \ref{fig:overall_avg_child_field} biểu diễn số lượng trẻ em sinh trung bình của những người tham gia khảo sát có giá trị tương ứng trong trường được tính trên toàn tập dữ liệu.
+    Với trường DEGREE ta nhận thấy chỉ số càng thấp thì số lượng trẻ em sinh trung bình càng cao.
+    Trường INCOME, ở khu vực chỉ số thấp số lượng trẻ em sinh trung bình từ một người tham gia có xu hướng cao hơn ở khu vực chỉ số cao.
+    Trường RACE, chỉ số 2 có số lượng trẻ em sinh trung bình cao hơn so với hai chỉ số giá trị còn lại.
+    Trường WRKSTAT, các chỉ số 5,7 và 8 có số lượng trẻ sinh trung bình cao hơn các chỉ số giá trị còn lại
 
-    \begin{figure}[h!]
+    \begin{figure}[H]
         \centering
-        \includegraphics[width=0.8\linewidth]{figures/overall_total_child_field.png}
-        \caption{Biểu đồ cột với trục hoành là giá trị của các trường và trục tung là phân phối tổng số lượng trẻ em được sinh của những người tham gia khảo sát có giá trị tương ứng trong trường được tính trên toàn tập dữ liệu}
+        \includegraphics[width=0.7\linewidth]{figures/overall_total_child_field.png}
+        \caption{Biểu đồ cột với trục hoành là giá trị của các trường và trục tung là tổng số lượng trẻ em được sinh của những người tham gia khảo sát có giá trị tương ứng trong trường được tính trên toàn tập dữ liệu}
         \label{fig:overall_total_child_field}
     \end{figure}
 
-    \begin{figure}[h!]
+    Hình \ref{fig:overall_total_child_field} biểu diễn tổng số lượng trẻ em được sinh của những người tham gia khảo sát có giá trị tương ứng trong trường được tính trên toàn tập dữ liệu.
+    Ta nhận thấy chủ yếu số lượng trẻ em được sinh ra khi bố mẹ đang ở trạng thái WRKSTAT là 1, MARITAL trạng thái là 1, RACE là 1, INCOME ở trạng thái 12, HAPPY chỉ số là 2.
+
+    \begin{figure}[H]
         \centering
-        \includegraphics[width=0.8\linewidth]{figures/considered_total_child_each_women_group.png}
+        \includegraphics[width=0.5\linewidth]{figures/considered_total_child_each_women_group.png}
         \caption{Tổng số trẻ em được sinh ra từ hai nhóm phụ nữ, nhóm 1 có trình độ văn hóa trên phổ thông (DEG $\geq$ 3), nhóm 2 có trình độ văn hóa còn lại (DEG $<$ 3), số liệu được tính sau khi dữ liệu đã được lọc theo yêu cầu của đề bài}
         \label{fig:considered_total_child_each_women_group}
     \end{figure}
 
-    \begin{figure}[h!]
+    Hình \ref{fig:considered_total_child_each_women_group} biểu diễn tổng số trẻ em sinh ra từ hai nhóm phụ nữ, nhóm 1 có trình độ văn hóa trên phổ thông (DEG $\geq$ 3), nhóm 2 có trình độ văn hóa còn lại (DEG $<$ 3), số liệu được tính sau khi dữ liệu đã được lọc theo yêu cầu của đề bài.
+    Sau khi lọc, tổng số phụ nữ là đối tượng quan tâm là 156.
+    Nhưng 1 quan sát có trường DEGREE là null.
+    Số phụ nữ thuộc nhóm 1 là nhóm phụ nữ có trình độ văn hóa trên phổ thông (DEG $\geq$ 3) là 44.
+    Tổng số trẻ em được nhóm phụ nữ số 1 sinh ra là 66.
+    Số phụ nữ thuộc nhóm 2 là nhóm phụ nữ có trình độ văn hóa còn lại (DEG $<$ 3) là 111.
+    Tổng số trẻ em được nhóm phụ nữ số 2 sinh ra là 217.
+
+    \begin{figure}[H]
         \centering
         \includegraphics[width=0.8\linewidth]{figures/considered_total_child_each_women_group_each_year.png}
         \caption{Số lượng trẻ em sinh ra được sinh ra từ hai nhóm phụ nữ trong từng năm trong các năm 1990, 1991, 1993, 1994, 1996, 1998 trong dữ liệu đã được lọc}
         \label{fig:considered_total_child_each_women_group_each_year}
     \end{figure}
 
-    \begin{figure}[h!]
+    Hình \ref{fig:considered_total_child_each_women_group_each_year} thể hiện số lượng trẻ em sinh ra được sinh ra từ hai nhóm phụ nữ trong từng năm trong các năm 1990, 1991, 1993, 1994, 1996, 1998 trong dữ liệu đã được lọc.
+    Ta nhận thấy số lượng trẻ em do những phụ nữ thuộc nhóm 2 sinh ra luôn cao hơn số lượng trẻ em do những phụ nữ thuộc nhóm 1 sinh ra trong từng năm.
+    Và qua các năm, số lượng trẻ em được sinh ra do cả hai nhóm phụ nữ có xu hướng tăng lên.
+
+    \begin{figure}[H]
         \centering
         \includegraphics[width=0.8\linewidth]{figures/considered_avg_child_field.png}
         \caption{Số lượng trẻ em trung bình được sinh ra từ nhóm phụ nữ tương ứng với giá trị của từng trường trong dữ liệu đã được lọc}
         \label{fig:considered_avg_child_field}
     \end{figure}
 
-    \begin{figure}[h!]
+    Hình \ref{fig:considered_avg_child_field} biểu diễn số lượng trẻ em trung bình được sinh ra từ nhóm phụ nữ tương ứng với giá trị của từng trường trong dữ liệu đã được lọc.
+    Ta nhận thấy trường WRKSTAT những phụ nữ có giá trị 2, 3 hoặc 7 có số trẻ em trung bình được sinh cao hơn các giá trị khác.
+    Trường DEGREE cho thấy trình độ văn hóa càng cao thì số lượng trẻ em trung bình được sinh ra có xu hướng giảm.
+    Trường RACE có giá trị 2 cho số lượng trẻ em trung bình được sinh ra cao nhân.
+    Trường INCOME những phụ nữ có giá trị thuộc nhóm 4, 5 cho số trẻ em trung bình được sinh ra là cao nhất.
+    Trường HAPPY, chỉ số càng cao thì số trẻ em trung bình được sinh ra có xu hướng càng tăng.
+
+    \begin{figure}[H]
         \centering
         \includegraphics[width=0.8\linewidth]{figures/considered_total_child_field.png}
         \caption{Tổng số lượng trẻ em được sinh ra từ nhóm phụ nữ tương ứng với giá trị của từng trường trong dữ liệu đã được lọc}
         \label{fig:considered_total_child_field}
     \end{figure}
+
+    Hình \ref{fig:considered_total_child_field} thể hiện tổng số lượng trẻ em được sinh ra từ nhóm phụ nữ tương ứng với giá trị của từng trường trong dữ liệu đã được lọc.
+    Trường WRKSTAT những phụ nữ thuộc nhóm có giá trị 1 hoặc 2 đóng góp tổng số trẻ được sinh ra là lớn nhất.
+    Trường MARITAL những phụ nữ thuộc nhóm có giá trị 1 sinh ra số lượng trẻ lớn hơn vượt trội so với nhóm còn lại.
+    Trường DEGREE, số lượng trẻ được sinh bởi nhóm phụ nữ có giá trị 1 là lớn nhất.
+    Đa số trẻ em được sinh ra từ phụ nữ có giá trị trường RACE là 1.
+    Trường INCOME, những phụ nữ thuộc nhóm có giá trị 12 sinh ra số lượng trẻ lớn hơn tất cả các nhóm giá trị còn lại.
+    Đa số trẻ em được sinh ra bởi những phụ nữ có giá trị HAPPY là 1 hoặc 2.
+
+    Từ các phân tích trên, ta rút ra một số kết luận:
+
+    \begin{itemize}
+        \item Những phụ nữ thuộc nhóm RACE có giá trị 2 có số lượng trẻ em trung bình được sinh ra bởi một người phụ nữ là cao nhất.
+        \item Khi giá trị trường DEGREE tăng thì số lượng trẻ em trung bình được sinh ra có xu hướng giảm.
+        \item Đa số trẻ em được sinh ra từ những phụ nữ có trạng thái MARITAL là 1.
+    \end{itemize}
 
     \begin{enumerate}
         \item Xác định phân phối của dữ liệu (likelihood):
