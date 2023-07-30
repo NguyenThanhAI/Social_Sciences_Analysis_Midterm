@@ -355,6 +355,8 @@
             g(\lambda \vert X_1 =x_1, X_2=x_2, \dots, X_n=x_n) = \dfrac{g(\lambda) f(X_1=x_1,X_2=x_2,\dots, X_n=x_n \vert \lambda)}{\int g(\lambda) f(X_1=x_1,X_2=x_2,\dots, X_n=x_n \vert \lambda) d \lambda}
         \end{equation*}
 
+        \textbf{Ta tìm phân phối hậu nghiệm của tỷ lệ sinh bằng lý thuyết:}
+
         \begin{enumerate}[label=(\alph*)]
             \item Phân phối đều
             
@@ -460,11 +462,11 @@
         Ta sử dụng phương pháp lặp cho từng quan sát, ta lấy các điểm rời rạc, tính giá trị các điểm này theo hàm mật độ xác suất của phân phối tiên nghiệm đang xét.
         Do tổng giá trị của các điểm rời rạc phân phối tiên nghiệm phải là 1 nên sau khi tính giá trị các điểm này theo hàm mật độ xác suất, ta cần có bước chuẩn hóa bằng cách gán lại giá trị tại mỗi điểm bằng thương của giá trị tại mỗi điểm chia cho tổng giá trị tại các điểm.
         Cụ thể, ta chọn phân phối tiên nghiệm $g(\lambda)$.
-        Ta chọn $m$ điểm $e_1, e_2, \dots, e_m$ trên trục hoành, ta tính giá trị các điểm này trên phân phối tiên nghiệm $g(e_1), g(e_2), \dots, g(e_m)$.
+        Ta chọn $m$ điểm $l_1, l_2, \dots, l_m$ trên trục hoành, ta tính giá trị các điểm này trên phân phối tiên nghiệm $g(e_1), g(e_2), \dots, g(e_m)$.
         Ta tính tiên nghiệm rời rạc bằng cách:
 
         \begin{equation*}
-            \text{prior} = \Big \lbrack \dfrac{g(e_1)}{\sum_{i=1}^m g(e_i)}, \dfrac{g(e_2)}{\sum_{i=1}^m g(e_i)}, \dots, \dfrac{g(e_m)}{\sum_{i=1}^m g(e_i)} \Big \rbrack
+            \text{prior} = \Big \lbrack \dfrac{g(l_1)}{\sum_{i=1}^m g(l_i)}, \dfrac{g(l_2)}{\sum_{i=1}^m g(l_i)}, \dots, \dfrac{g(l_m)}{\sum_{i=1}^m g(l_i)} \Big \rbrack
         \end{equation*}
 
         Điều này đảm bảo tổng các điểm trên phân phối tiên nghiệm được rời rạc hóa là 1.
@@ -478,12 +480,12 @@
             \DontPrintSemicolon
             \KwIn{Phân phối tiên nghiệm $g(\lambda)$, tập các quan sát $\lbrack x_1, x_2, \dots, x_n \rbrack$}
             \KwOut{Phân phối hậu nghiệm}
-            Lấy một tập gồm m các điểm trên trục hoành $\lbrack e_1, e_2, \dots, e_m \rbrack$\;
-            Tính giá trị các điểm này trên phân phối tiên nghiệm $\lbrack g(e_1), g(e_2), \dots, g(e_m) \rbrack$\;
-            prior $\gets \Big \lbrack \dfrac{g(e_1)}{\sum_{k=1}^m g(e_i)}, \dfrac{g(e_2)}{\sum_{k=1}^m g(e_i)}, \dots, \dfrac{g(e_m)}{\sum_{k=1}^m g(e_i)} \Big \rbrack$\;
+            Lấy một tập gồm m các điểm trên trục hoành $\lbrack l_1, l_2, \dots, l_m \rbrack$\;
+            Tính giá trị các điểm này trên phân phối tiên nghiệm $\lbrack g(l_1), g(l_2), \dots, g(l_m) \rbrack$\;
+            prior $\gets \Big \lbrack \dfrac{g(l_1)}{\sum_{k=1}^m g(l_i)}, \dfrac{g(l_2)}{\sum_{k=1}^m g(l_i)}, \dots, \dfrac{g(l_m)}{\sum_{k=1}^m g(l_i)} \Big \rbrack$\;
             \For{$i \gets 1$ \KwSty{to} $n$}{
                 \For{$j \gets 1$ \KwSty{to} $m$} {
-                    $pos_j \gets g(e_j) \times \dfrac{e_j^{x_i}}{x_i!}$\;
+                    $pos_j \gets g(l_j) \times \dfrac{\exp(-l_j) \times l_j^{x_i}}{x_i!}$\;
                 }
                 posterior $\gets \Big \lbrack \dfrac{pos_1}{\sum_{k=1}^m pos_k}, \dfrac{pos_2}{\sum_{k=1}^m pos_k}, \dots, \dfrac{pos_m}{\sum_{k=1}^m pos_k} \Big \rbrack$\;
                 prior $\gets$ posterior\;
@@ -786,6 +788,8 @@ plt.show()
 
         \item Ước lượng tỷ lệ sinh của 02 nhóm phụ nữ
         
+        \textbf{Ước lượng điểm:}
+        
         Để ước lượng tỷ lệ sinh của hai nhóm phụ nữ.
         Ta có thể sử dụng lấy trung bình hoặc mode của phân phối hậu nghiệm của tỷ lệ sinh của hai nhóm tương ứng.
         Đầu tiên ta sẽ tìm trung bình và mode từ phân phối hậu nghiệm lý thuyết của tỷ lệ sinh khi phân phối tiên nghiệm là phân phối đều hoặc phân phối tiên nghiệm là phân phối gamma
@@ -980,6 +984,8 @@ plt.show()
                 \end{equation*}
             \end{itemize}
         \end{itemize}
+
+        \textbf{Ước lượng khoảng tin cậy:}
 
         Ta ước lượng khoảng tin cậy cho tỷ lệ sinh của hai nhóm phụ nữ:
 
