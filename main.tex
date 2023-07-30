@@ -398,6 +398,7 @@ prior_gamma = prior_gamma / np.sum(prior_gamma)
 
         \begin{python}
 plt.plot(lamdas, prior_gamma, label="gamma prior")
+plt.xlabel("$\lambda$")
 plt.legend()
 plt.grid()
 plt.show()
@@ -444,6 +445,7 @@ posterior_loop_gamma_deg_geq_3 = compute_posterior_loop(prior=prior_gamma, lamda
 def plot_posterior_comparison(lamdas, pos_theory, pos_loop, prior_type="uniform"):
     plt.plot(lamdas, pos_theory, label="posterior {} theory".format(prior_type), linestyle="dashed")
     plt.plot(lamdas, pos_loop, label="posterior loop", linestyle="dotted")
+    plt.xlabel("$\lambda$")
     plt.grid()
     plt.legend()
     plt.show()
@@ -653,6 +655,7 @@ normal_approx_of_gamma_distribution = normal_pdf_vector(x, 90/30, np.sqrt(90/(30
             
 plt.plot(x, gamma_distribution, label="gamma distribution", linestyle="solid")
 plt.plot(x, normal_approx_of_gamma_distribution, label="normal approximation of gamma distribution", linestyle="dashed")
+plt.xlabel("$\lambda$")
 plt.legend()
 plt.grid()
 plt.show()
@@ -1098,6 +1101,7 @@ normal_approx_deg_less_3 = normal_pdf_vector(x, (child_total_deg_less_3 + 1)/n_d
             
 plt.plot(x, normal_approx_deg_geq_3, label="posterior of deg $\geq$ 3, prior uniform", linestyle="solid")
 plt.plot(x, normal_approx_deg_less_3, label="posterior of deg < 3, prior uniform", linestyle="solid")
+plt.xlabel("$\lambda$")
 plt.legend()
 plt.grid()
 plt.show()
@@ -1173,6 +1177,7 @@ normal_approx_deg_less_3 = normal_pdf_vector(x, (child_total_deg_less_3 + alpha)
             
 plt.plot(x, normal_approx_deg_geq_3, label="posterior of deg $\geq$ 3, prior gamma", linestyle="solid")
 plt.plot(x, normal_approx_deg_less_3, label="posterior of deg < 3, prior gamma", linestyle="solid")
+plt.xlabel("$\lambda$")
 plt.legend()
 plt.grid()
 plt.show()
